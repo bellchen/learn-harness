@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闪卡复习 - OpenAI Harness Engineering 工坊</title>
+  <meta name="description" content="使用闪卡快速复习 OpenAI Harness Engineering 的核心概念。">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <meta name="theme-color" content="#FBBF24">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/minimal.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">🔬 Harness Engineering 工坊</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="learn.html" class="nav-link">学习</a>
+        <a href="flashcard.html" class="nav-link active">闪卡</a>
+        <a href="roots.html" class="nav-link">索引</a>
+        <a href="progress.html" class="nav-link">进度</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1>闪卡复习</h1>
+      <p>点击卡片翻转，使用键盘 ← → 切换</p>
+    </div>
+
+    <div class="container">
+      <div class="flashcard-container">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="flashcard-front">
+            <div class="flashcard-root" id="frontRoot">-</div>
+            <div class="flashcard-meaning" id="frontMeaning">-</div>
+            <div class="flashcard-origin" id="frontOrigin">-</div>
+          </div>
+          <div class="flashcard-back">
+            <div class="flashcard-root" id="backRoot">-</div>
+            <div class="flashcard-description" id="backDescription">-</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flashcard-controls">
+        <button class="btn btn-secondary" onclick="prevCard()">← 上一个</button>
+        <button class="btn btn-success" id="masterBtn" onclick="toggleMaster()">标记已掌握</button>
+        <button class="btn btn-secondary" onclick="nextCard()">下一个 →</button>
+      </div>
+
+      <div class="flashcard-progress">
+        <span id="progressText">1 / 25</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="keyboard-hint">
+        <kbd>←</kbd> 上一个 &nbsp; <kbd>空格</kbd> 翻转 &nbsp; <kbd>→</kbd> 下一个
+      </div>
+    </div>
+  </main>
+
+  <script src="js/wordData.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    (function() {
+      let currentIndex = 0;
+
+      function showFeedback(message, isSuccess) {
+        const toast = document.createElement('div');
+        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(function() { toast.remove(); }, 3000);
+      }
+
+      function loadCard(index) {
+        const safeIndex = ((index % WordRoots.length) + WordRoots.length) % WordRoots.length;
+        currentIndex = safeIndex;
+        const root = WordRoots[safeIndex];
+        const progress = StorageManager.getProgress();
+        const isMastered = progress.masteredRoots.includes(root.id);
+
+        const card = document.getElementById('flashcard');
+        if (card) card.classList.remove('flipped');
+
+        const frontRoot = document.getElementById('frontRoot');
+        const frontMeaning = document.getElementById('frontMeaning');
+        const frontOrigin = document.getElementById('frontOrigin');
+        const backRoot = document.getElementById('backRoot');
+        const backDesc = document.getElementById('backDescription');
+        const masterBtn = document.getElementById('masterBtn');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+
+        if (frontRoot) frontRoot.textContent = root.root;
+        if (frontMeaning) frontMeaning.textContent = root.meaning;
+        if (frontOrigin) frontOrigin.textContent = root.origin;
+        if (backRoot) backRoot.textContent = root.root;
+        if (backDesc) backDesc.textContent = root.description;
+        if (masterBtn) {
+          masterBtn.textContent = isMastered ? '取消掌握' : '标记已掌握';
+          masterBtn.className = isMastered ? 'btn btn-secondary' : 'btn btn-success';
+        }
+        if (progressText) progressText.textContent = (safeIndex + 1) + ' / ' + WordRoots.length;
+        if (progressBar) progressBar.style.width = ((safeIndex + 1) / WordRoots.length * 100) + '%';
+      }
+
+      window.flipCard = function() {
+        const card = document.getElementById('flashcard');
+        if (card) card.classList.toggle('flipped');
+      };
+
+      window.nextCard = function() { loadCard(currentIndex + 1); };
+      window.prevCard = function() { loadCard(currentIndex - 1); };
+
+      window.toggleMaster = function() {
+        const root = WordRoots[currentIndex];
+        const progress = StorageManager.getProgress();
+        if (progress.masteredRoots.includes(root.id)) {
+          StorageManager.unmarkRootAsMastered(root.id);
+          showFeedback('已取消掌握标记', false);
+        } else {
+          StorageManager.markRootAsMastered(root.id);
+          showFeedback('✓ 已标记为掌握！', true);
+        }
+        loadCard(currentIndex);
+      };
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') window.prevCard();
+        if (e.key === 'ArrowRight') window.nextCard();
+        if (e.key === ' ') { e.preventDefault(); window.flipCard(); }
+      });
+
+      loadCard(0);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>概念索引 - OpenAI Harness Engineering 工坊</title>
+  <meta name="description" content="浏览和搜索所有 OpenAI Harness Engineering 核心概念。">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <meta name="theme-color" content="#FBBF24">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/minimal.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">🔬 Harness Engineering 工坊</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="learn.html" class="nav-link">学习</a>
+        <a href="flashcard.html" class="nav-link">闪卡</a>
+        <a href="roots.html" class="nav-link active">索引</a>
+        <a href="progress.html" class="nav-link">进度</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1>概念索引</h1>
+      <p>浏览和搜索全部 25 个核心概念</p>
+    </div>
+
+    <div class="container-wide">
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchInput" placeholder="搜索概念名称或含义..." oninput="searchRoots()">
+      </div>
+      <div id="filterContainer" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;"></div>
+      <div class="roots-grid" id="rootsGrid"></div>
+    </div>
+  </main>
+
+  <script src="js/wordData.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    (function() {
+      let activeFilter = 'all';
+
+      function getOrigins() {
+        const origins = new Set();
+        WordRoots.forEach(function(root) { origins.add(root.origin); });
+        return Array.from(origins);
+      }
+
+      function renderFilters() {
+        const container = document.getElementById('filterContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        var allBtn = document.createElement('button');
+        allBtn.className = 'filter-btn active';
+        allBtn.textContent = '全部';
+        allBtn.onclick = function() { activeFilter = 'all'; renderRoots(WordRoots); updateFilterUI(); };
+        container.appendChild(allBtn);
+
+        getOrigins().forEach(function(origin) {
+          var btn = document.createElement('button');
+          btn.className = 'filter-btn';
+          btn.textContent = origin;
+          btn.onclick = function() { activeFilter = origin; filterByOrigin(origin); updateFilterUI(); };
+          container.appendChild(btn);
+        });
+      }
+
+      function updateFilterUI() {
+        document.querySelectorAll('.filter-btn').forEach(function(btn) {
+          var isActive = (activeFilter === 'all' && btn.textContent === '全部') || btn.textContent === activeFilter;
+          btn.className = isActive ? 'filter-btn active' : 'filter-btn';
+        });
+      }
+
+      function createRootCard(root, isMastered) {
+        var card = document.createElement('div');
+        card.className = 'root-card' + (isMastered ? ' mastered' : '');
+        card.onclick = function() { window.location.href = 'root-detail.html?id=' + root.id; };
+
+        var nameDiv = document.createElement('div');
+        nameDiv.className = 'root-name';
+        nameDiv.textContent = root.root;
+
+        var meaningDiv = document.createElement('div');
+        meaningDiv.className = 'root-meaning';
+        meaningDiv.textContent = root.meaning;
+
+        var metaDiv = document.createElement('div');
+        metaDiv.style.marginTop = '12px';
+
+        var originSpan = document.createElement('span');
+        originSpan.className = 'root-origin';
+        originSpan.textContent = root.origin;
+        metaDiv.appendChild(originSpan);
+
+        if (isMastered) {
+          var badge = document.createElement('span');
+          badge.className = 'mastered-badge';
+          badge.textContent = '✓ 已掌握';
+          metaDiv.appendChild(badge);
+        }
+
+        card.appendChild(nameDiv);
+        card.appendChild(meaningDiv);
+        card.appendChild(metaDiv);
+        return card;
+      }
+
+      function renderRoots(roots) {
+        var container = document.getElementById('rootsGrid');
+        if (!container) return;
+        var progress = StorageManager.getProgress();
+        var masteredIds = new Set(progress.masteredRoots);
+        container.innerHTML = '';
+
+        if (roots.length === 0) {
+          var empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.innerHTML = '<h3>没有找到匹配的概念</h3><p>试试其他关键词</p>';
+          container.appendChild(empty);
+          return;
+        }
+
+        roots.forEach(function(root) {
+          container.appendChild(createRootCard(root, masteredIds.has(root.id)));
+        });
+      }
+
+      window.searchRoots = function() {
+        var query = (document.getElementById('searchInput')?.value || '').toLowerCase();
+        var filtered = WordRoots.filter(function(root) {
+          var matchSearch = !query || root.root.toLowerCase().includes(query) || root.meaning.toLowerCase().includes(query);
+          var matchFilter = activeFilter === 'all' || root.origin === activeFilter;
+          return matchSearch && matchFilter;
+        });
+        renderRoots(filtered);
+      };
+
+      function filterByOrigin(origin) {
+        var query = (document.getElementById('searchInput')?.value || '').toLowerCase();
+        var filtered = WordRoots.filter(function(root) {
+          var matchSearch = !query || root.root.toLowerCase().includes(query) || root.meaning.toLowerCase().includes(query);
+          return root.origin === origin && matchSearch;
+        });
+        renderRoots(filtered);
+      }
+
+      renderFilters();
+      renderRoots(WordRoots);
+    })();
+  </script>
+</body>
+</html>

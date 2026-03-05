@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渐进学习 - OpenAI Harness Engineering 工坊</title>
+  <meta name="description" content="逐步学习 OpenAI Harness Engineering 的 25 个核心概念，包含详细说明、案例和测试题。">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <meta name="theme-color" content="#FBBF24">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/minimal.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">🔬 Harness Engineering 工坊</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="learn.html" class="nav-link active">学习</a>
+        <a href="flashcard.html" class="nav-link">闪卡</a>
+        <a href="roots.html" class="nav-link">索引</a>
+        <a href="progress.html" class="nav-link">进度</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="learn-container">
+    <div class="learn-header">
+      <h1 class="learn-title" id="rootName">-</h1>
+      <div class="learn-meta">
+        <span class="root-origin" id="rootOrigin">-</span>
+        <span class="mastered-badge" id="masteredBadge" style="display:none;">✓ 已掌握</span>
+      </div>
+      <p class="learn-description" id="rootMeaning" style="margin-top:16px;">-</p>
+    </div>
+
+    <section class="learn-section">
+      <h3>详细说明</h3>
+      <p class="learn-description" id="rootDescription">-</p>
+    </section>
+
+    <section class="learn-section">
+      <h3>实践案例</h3>
+      <div id="examplesContainer"></div>
+    </section>
+
+    <section class="quiz-section" id="quizSection">
+      <h3 style="margin-bottom:16px;">知识检验</h3>
+      <p class="quiz-question" id="quizQuestion">-</p>
+      <div class="quiz-options" id="quizOptions"></div>
+    </section>
+
+    <div class="learn-nav">
+      <button class="btn btn-secondary" id="prevBtn" onclick="prevRoot()">← 上一个</button>
+      <button class="btn btn-success" id="masterBtn" onclick="toggleMaster()">标记已掌握</button>
+      <button class="btn btn-secondary" id="nextBtn" onclick="nextRoot()">下一个 →</button>
+    </div>
+
+    <div class="flashcard-progress">
+      <span id="progressText">1 / 25</span>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/wordData.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    (function() {
+      let currentIndex = 0;
+
+      function showFeedback(message, isSuccess) {
+        const toast = document.createElement('div');
+        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(function() { toast.remove(); }, 3000);
+      }
+
+      function loadRoot(index) {
+        const safeIndex = ((index % WordRoots.length) + WordRoots.length) % WordRoots.length;
+        currentIndex = safeIndex;
+        const root = WordRoots[safeIndex];
+        const progress = StorageManager.getProgress();
+        const isMastered = progress.masteredRoots.includes(root.id);
+
+        const nameEl = document.getElementById('rootName');
+        const originEl = document.getElementById('rootOrigin');
+        const meaningEl = document.getElementById('rootMeaning');
+        const descEl = document.getElementById('rootDescription');
+        const badgeEl = document.getElementById('masteredBadge');
+        const masterBtn = document.getElementById('masterBtn');
+
+        if (nameEl) nameEl.textContent = root.root;
+        if (originEl) originEl.textContent = root.origin;
+        if (meaningEl) meaningEl.textContent = root.meaning;
+        if (descEl) descEl.textContent = root.description;
+
+        if (badgeEl) badgeEl.style.display = isMastered ? 'inline-block' : 'none';
+        if (masterBtn) {
+          masterBtn.textContent = isMastered ? '取消掌握' : '标记已掌握';
+          masterBtn.className = isMastered ? 'btn btn-secondary' : 'btn btn-success';
+        }
+
+        renderExamples(root.examples);
+        renderQuiz(root.quiz, root);
+        updateProgressUI();
+        StorageManager.updateProgress(safeIndex);
+      }
+
+      function renderExamples(examples) {
+        const container = document.getElementById('examplesContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        examples.forEach(function(ex) {
+          const card = document.createElement('div');
+          card.className = 'example-card';
+          const word = document.createElement('div');
+          word.className = 'example-word';
+          word.textContent = ex.word;
+          const meaning = document.createElement('div');
+          meaning.className = 'example-meaning';
+          meaning.textContent = ex.meaning;
+          const explanation = document.createElement('div');
+          explanation.className = 'example-explanation';
+          explanation.textContent = ex.explanation;
+          card.appendChild(word);
+          card.appendChild(meaning);
+          card.appendChild(explanation);
+          container.appendChild(card);
+        });
+      }
+
+      function renderQuiz(quiz, root) {
+        const questionEl = document.getElementById('quizQuestion');
+        const optionsEl = document.getElementById('quizOptions');
+        if (!questionEl || !optionsEl) return;
+        questionEl.textContent = quiz.question;
+        optionsEl.innerHTML = '';
+        quiz.options.forEach(function(option, index) {
+          const button = document.createElement('button');
+          button.className = 'quiz-option';
+          button.textContent = option;
+          button.onclick = function() { checkAnswer(index, quiz); };
+          optionsEl.appendChild(button);
+        });
+      }
+
+      function checkAnswer(selectedIndex, quiz) {
+        const isCorrect = selectedIndex === quiz.correctAnswer;
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(function(btn, index) {
+          btn.disabled = true;
+          if (index === quiz.correctAnswer) btn.classList.add('correct');
+          else if (index === selectedIndex && !isCorrect) btn.classList.add('wrong');
+        });
+        setTimeout(function() {
+          if (isCorrect) showFeedback('✓ 回答正确！', true);
+          else showFeedback('✗ 正确答案是：' + quiz.options[quiz.correctAnswer], false);
+        }, 300);
+      }
+
+      function updateProgressUI() {
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+        if (progressText) progressText.textContent = (currentIndex + 1) + ' / ' + WordRoots.length;
+        if (progressBar) progressBar.style.width = ((currentIndex + 1) / WordRoots.length * 100) + '%';
+      }
+
+      window.nextRoot = function() { loadRoot(currentIndex + 1); window.scrollTo(0, 0); };
+      window.prevRoot = function() { loadRoot(currentIndex - 1); window.scrollTo(0, 0); };
+      window.toggleMaster = function() {
+        const root = WordRoots[currentIndex];
+        const progress = StorageManager.getProgress();
+        if (progress.masteredRoots.includes(root.id)) {
+          StorageManager.unmarkRootAsMastered(root.id);
+          showFeedback('已取消掌握标记', false);
+        } else {
+          StorageManager.markRootAsMastered(root.id);
+          showFeedback('✓ 已标记为掌握！', true);
+        }
+        loadRoot(currentIndex);
+      };
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') window.prevRoot();
+        if (e.key === 'ArrowRight') window.nextRoot();
+      });
+
+      var startIndex = StorageManager.getProgress().currentRootIndex || 0;
+      loadRoot(startIndex);
+    })();
+  </script>
+</body>
+</html>

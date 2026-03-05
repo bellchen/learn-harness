@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学习进度 - OpenAI Harness Engineering 工坊</title>
+  <meta name="description" content="查看你的 OpenAI Harness Engineering 学习进度和成就。">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <meta name="theme-color" content="#FBBF24">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/minimal.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">🔬 Harness Engineering 工坊</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="learn.html" class="nav-link">学习</a>
+        <a href="flashcard.html" class="nav-link">闪卡</a>
+        <a href="roots.html" class="nav-link">索引</a>
+        <a href="progress.html" class="nav-link active">进度</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <h1>学习进度</h1>
+      <p>追踪你的学习成果</p>
+    </div>
+
+    <div class="container">
+      <div class="progress-overview">
+        <div class="progress-stat">
+          <div class="stat-value" id="masteredCount">0</div>
+          <div class="stat-label">已掌握</div>
+        </div>
+        <div class="progress-stat">
+          <div class="stat-value" id="totalCount">25</div>
+          <div class="stat-label">总概念</div>
+        </div>
+        <div class="progress-stat">
+          <div class="stat-value" id="percentage">0%</div>
+          <div class="stat-label">完成度</div>
+        </div>
+      </div>
+
+      <div class="progress-bar-large">
+        <div class="fill" id="progressBarLarge"></div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+        <h3>已掌握的概念</h3>
+        <button class="btn btn-secondary" onclick="resetProgress()" style="font-size:0.875rem;padding:8px 16px;">重置进度</button>
+      </div>
+
+      <div id="masteredList"></div>
+
+      <div class="empty-state" id="emptyState">
+        <h3>还没有掌握任何概念</h3>
+        <p>去学习页面开始吧！</p>
+        <a href="learn.html" class="btn btn-primary" style="margin-top:16px;">开始学习 →</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/wordData.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    (function() {
+      function showFeedback(message, isSuccess) {
+        var toast = document.createElement('div');
+        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(function() { toast.remove(); }, 3000);
+      }
+
+      function loadProgress() {
+        var progress = StorageManager.getProgress();
+        var masteredCount = progress.masteredRoots.length;
+        var totalCount = WordRoots.length;
+        var pct = Math.round((masteredCount / totalCount) * 100);
+
+        var masteredEl = document.getElementById('masteredCount');
+        var totalEl = document.getElementById('totalCount');
+        var pctEl = document.getElementById('percentage');
+        var barEl = document.getElementById('progressBarLarge');
+        var listEl = document.getElementById('masteredList');
+        var emptyEl = document.getElementById('emptyState');
+
+        if (masteredEl) masteredEl.textContent = masteredCount;
+        if (totalEl) totalEl.textContent = totalCount;
+        if (pctEl) pctEl.textContent = pct + '%';
+        if (barEl) barEl.style.width = pct + '%';
+
+        if (listEl) {
+          listEl.innerHTML = '';
+          if (masteredCount > 0) {
+            progress.masteredRoots.forEach(function(rootId) {
+              var root = WordRoots.find(function(r) { return r.id === rootId; });
+              if (!root) return;
+              var item = document.createElement('div');
+              item.className = 'mastered-item';
+              var info = document.createElement('div');
+              info.className = 'mastered-info';
+              var h4 = document.createElement('h4');
+              h4.textContent = root.root;
+              var p = document.createElement('p');
+              p.textContent = root.meaning;
+              info.appendChild(h4);
+              info.appendChild(p);
+              var link = document.createElement('a');
+              link.href = 'root-detail.html?id=' + root.id;
+              link.className = 'btn btn-secondary';
+              link.textContent = '查看';
+              link.style.fontSize = '0.875rem';
+              link.style.padding = '6px 12px';
+              item.appendChild(info);
+              item.appendChild(link);
+              listEl.appendChild(item);
+            });
+          }
+        }
+
+        if (emptyEl) emptyEl.style.display = masteredCount > 0 ? 'none' : 'block';
+      }
+
+      window.resetProgress = function() {
+        if (confirm('确定要重置所有学习进度吗？此操作无法撤销。')) {
+          StorageManager.resetProgress();
+          showFeedback('✓ 进度已重置', true);
+          loadProgress();
+        }
+      };
+
+      loadProgress();
+    })();
+  </script>
+</body>
+</html>
