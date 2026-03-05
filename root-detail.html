@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>概念详情 - OpenAI Harness Engineering 工坊</title>
-  <meta name="description" content="深入了解 OpenAI Harness Engineering 核心概念的详细信息。">
+  <title id="pageTitle">概念详情 - Harness Engineering 工坊</title>
+  <meta name="description" content="深入了解 Harness Engineering 核心概念的详细说明、应用实例和测试题目。" id="pageDescription">
+  <meta name="keywords" content="Harness Engineering,概念详情,应用实例,测试">
+  <meta name="author" content="Harness Engineering 工坊">
+  <meta name="language" content="zh-CN">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="canonical" href="https://learn-harness.vercel.app/root-detail.html" id="canonicalUrl">
+  <meta property="og:title" content="概念详情 - Harness Engineering 工坊" id="ogTitle">
+  <meta property="og:description" content="深入了解 Harness Engineering 核心概念" id="ogDescription">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learn-harness.vercel.app/root-detail.html" id="ogUrl">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FBBF24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -30,38 +40,23 @@
   </nav>
 
   <main class="detail-container">
-    <a href="roots.html" class="detail-back">← 返回索引</a>
+    <button class="btn btn-ghost" onclick="goBack()" style="margin-bottom:24px;">← 返回</button>
 
-    <div class="learn-header">
-      <h1 class="learn-title" id="rootName">-</h1>
-      <div class="learn-meta">
-        <span class="root-origin" id="rootOrigin">-</span>
-        <span class="mastered-badge" id="masteredBadge" style="display:none;">✓ 已掌握</span>
-      </div>
-      <p class="learn-description" id="rootMeaning" style="margin-top:16px;">-</p>
+    <div id="detailContent"></div>
+
+    <!-- 相关概念推荐 -->
+    <div id="relatedSection" style="margin-top:48px;">
+      <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:20px;">相关概念</h3>
+      <div class="roots-grid" id="relatedItems"></div>
     </div>
 
-    <section class="learn-section">
-      <h3>详细说明</h3>
-      <p class="learn-description" id="rootDescription">-</p>
-    </section>
-
-    <section class="learn-section">
-      <h3>实践案例</h3>
-      <div id="examplesContainer"></div>
-    </section>
-
-    <section class="quiz-section" id="quizSection">
-      <h3 style="margin-bottom:16px;">知识检验</h3>
-      <p class="quiz-question" id="quizQuestion">-</p>
-      <div class="quiz-options" id="quizOptions"></div>
-    </section>
-
-    <div style="margin-top:32px;display:flex;gap:12px;">
-      <button class="btn btn-success" id="masterBtn" onclick="toggleMaster()">标记已掌握</button>
-      <a href="roots.html" class="btn btn-secondary">返回索引</a>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="learn.html" class="btn btn-primary">进入学习模式</a>
+      <a href="flashcard.html" class="btn btn-secondary" style="margin-left:12px;">闪卡复习</a>
     </div>
   </main>
+
+  <div class="toast" id="toast"></div>
 
   <script src="js/wordData.js"></script>
   <script src="js/storage.js"></script>
@@ -70,114 +65,168 @@
       var params = new URLSearchParams(window.location.search);
       var rootId = parseInt(params.get('id'));
       var currentRoot = null;
+      var quizAnswered = false;
 
-      function showFeedback(message, isSuccess) {
-        var toast = document.createElement('div');
-        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+      function showToast(message) {
+        var toast = document.getElementById('toast');
+        if (!toast) return;
         toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(function() { toast.remove(); }, 3000);
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 2000);
       }
 
-      function loadRoot() {
-        currentRoot = WordRoots.find(function(r) { return r.id === rootId; });
-        if (!currentRoot) {
-          console.warn('Root not found, redirecting to index');
+      window.goBack = function() {
+        if (document.referrer && document.referrer.indexOf(window.location.host) >= 0) {
+          history.back();
+        } else {
           window.location.href = 'roots.html';
+        }
+      };
+
+      function updatePageMeta(item) {
+        var title = item.root + ' - Harness Engineering 工坊';
+        var description = item.meaning + '。' + item.description.substring(0, 150) + '...';
+        var url = 'https://learn-harness.vercel.app/root-detail.html?id=' + item.id;
+        document.title = title;
+        var descEl = document.getElementById('pageDescription');
+        if (descEl) descEl.setAttribute('content', description);
+        var canonEl = document.getElementById('canonicalUrl');
+        if (canonEl) canonEl.href = url;
+        var ogTitleEl = document.getElementById('ogTitle');
+        if (ogTitleEl) ogTitleEl.setAttribute('content', title);
+        var ogDescEl = document.getElementById('ogDescription');
+        if (ogDescEl) ogDescEl.setAttribute('content', description);
+        var ogUrlEl = document.getElementById('ogUrl');
+        if (ogUrlEl) ogUrlEl.setAttribute('content', url);
+      }
+
+      function renderDetail(item) {
+        if (!item) {
+          document.getElementById('detailContent').innerHTML = '<div style="text-align:center;padding:48px 0;"><h2>概念未找到</h2><p style="color:var(--color-text-secondary)">请检查URL或返回索引</p><a href="roots.html" class="btn btn-primary" style="margin-top:16px;">返回索引</a></div>';
           return;
         }
+        currentRoot = item;
+        updatePageMeta(item);
+        markItemVisited(item.id);
 
-        var progress = StorageManager.getProgress();
-        var isMastered = progress.masteredRoots.includes(currentRoot.id);
+        var mastered = isMastered(item.id);
+        var html = '<div class="learn-header">' +
+          '<div class="learn-meta"><span class="root-origin">' + item.origin + '</span>' +
+          '<span class="mastered-badge" id="masteredBadge" style="display:' + (mastered ? 'inline-block' : 'none') + ';">✓ 已掌握</span></div>' +
+          '<h1 class="learn-title" style="margin-top:12px;">' + item.root + '</h1>' +
+          '<div class="detail-meaning">' + item.meaning + '</div>' +
+          '</div>' +
+          '<div class="learn-section"><h3>详细说明</h3><p class="learn-description">' + item.description + '</p></div>' +
+          '<div class="learn-section"><h3>实践案例</h3><div id="examplesContainer"></div></div>';
 
-        var nameEl = document.getElementById('rootName');
-        var originEl = document.getElementById('rootOrigin');
-        var meaningEl = document.getElementById('rootMeaning');
-        var descEl = document.getElementById('rootDescription');
-        var badgeEl = document.getElementById('masteredBadge');
-        var masterBtn = document.getElementById('masterBtn');
-
-        if (nameEl) nameEl.textContent = currentRoot.root;
-        if (originEl) originEl.textContent = currentRoot.origin;
-        if (meaningEl) meaningEl.textContent = currentRoot.meaning;
-        if (descEl) descEl.textContent = currentRoot.description;
-        if (badgeEl) badgeEl.style.display = isMastered ? 'inline-block' : 'none';
-        if (masterBtn) {
-          masterBtn.textContent = isMastered ? '取消掌握' : '标记已掌握';
-          masterBtn.className = isMastered ? 'btn btn-secondary' : 'btn btn-success';
+        if (item.quiz) {
+          html += '<div class="quiz-section"><h3 style="margin-bottom:16px;">知识测试</h3>' +
+            '<p class="quiz-question">' + item.quiz.question + '</p>' +
+            '<div class="quiz-options" id="quizOptions"></div>' +
+            '<div class="quiz-result hidden" id="quizResult"></div></div>';
         }
 
-        document.title = currentRoot.root + ' - OpenAI Harness Engineering 工坊';
-        renderExamples(currentRoot.examples);
-        renderQuiz(currentRoot.quiz);
-      }
+        html += '<div style="text-align:center;margin-top:32px;">' +
+          '<button class="btn ' + (mastered ? 'btn-secondary' : 'btn-success') + '" onclick="toggleMaster()">' +
+          (mastered ? '★ 已掌握' : '☆ 标记掌握') + '</button></div>';
 
-      function renderExamples(examples) {
+        document.getElementById('detailContent').innerHTML = html;
+
+        // 渲染案例
         var container = document.getElementById('examplesContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        examples.forEach(function(ex) {
-          var card = document.createElement('div');
-          card.className = 'example-card';
-          var word = document.createElement('div');
-          word.className = 'example-word';
-          word.textContent = ex.word;
-          var meaning = document.createElement('div');
-          meaning.className = 'example-meaning';
-          meaning.textContent = ex.meaning;
-          var explanation = document.createElement('div');
-          explanation.className = 'example-explanation';
-          explanation.textContent = ex.explanation;
-          card.appendChild(word);
-          card.appendChild(meaning);
-          card.appendChild(explanation);
-          container.appendChild(card);
-        });
+        if (container) {
+          item.examples.forEach(function(ex) {
+            var card = document.createElement('div');
+            card.className = 'example-card';
+            card.innerHTML = '<div class="example-word">' + ex.word + '</div>' +
+              '<div class="example-meaning">' + ex.meaning + '</div>' +
+              '<div class="example-explanation">' + ex.explanation + '</div>';
+            container.appendChild(card);
+          });
+        }
+
+        // 渲染 quiz
+        if (item.quiz) {
+          quizAnswered = false;
+          var optionsEl = document.getElementById('quizOptions');
+          if (optionsEl) {
+            item.quiz.options.forEach(function(option, index) {
+              var btn = document.createElement('button');
+              btn.className = 'quiz-option';
+              btn.textContent = String.fromCharCode(65 + index) + '. ' + option;
+              btn.onclick = function() { selectOption(index); };
+              optionsEl.appendChild(btn);
+            });
+          }
+        }
       }
 
-      function renderQuiz(quiz) {
-        var questionEl = document.getElementById('quizQuestion');
-        var optionsEl = document.getElementById('quizOptions');
-        if (!questionEl || !optionsEl) return;
-        questionEl.textContent = quiz.question;
-        optionsEl.innerHTML = '';
-        quiz.options.forEach(function(option, index) {
-          var button = document.createElement('button');
-          button.className = 'quiz-option';
-          button.textContent = option;
-          button.onclick = function() { checkAnswer(index, quiz); };
-          optionsEl.appendChild(button);
-        });
-      }
-
-      function checkAnswer(selectedIndex, quiz) {
-        var isCorrect = selectedIndex === quiz.correctAnswer;
+      window.selectOption = function(selectedIndex) {
+        if (quizAnswered || !currentRoot) return;
         var options = document.querySelectorAll('.quiz-option');
-        options.forEach(function(btn, index) {
-          btn.disabled = true;
-          if (index === quiz.correctAnswer) btn.classList.add('correct');
-          else if (index === selectedIndex && !isCorrect) btn.classList.add('wrong');
-        });
+        var result = document.getElementById('quizResult');
+        var correctIndex = currentRoot.quiz.correctAnswer;
+
+        options[selectedIndex].classList.add('selected');
         setTimeout(function() {
-          if (isCorrect) showFeedback('✓ 回答正确！', true);
-          else showFeedback('✗ 正确答案是：' + quiz.options[quiz.correctAnswer], false);
+          options[correctIndex].classList.add('correct');
+          if (selectedIndex !== correctIndex) options[selectedIndex].classList.add('wrong');
+          var isCorrect = selectedIndex === correctIndex;
+          if (result) {
+            result.className = 'quiz-result ' + (isCorrect ? 'correct' : 'incorrect');
+            result.textContent = isCorrect ? '✓ 回答正确！' : '✗ 回答错误。正确答案是 ' + String.fromCharCode(65 + correctIndex);
+          }
+          saveQuizResult(currentRoot.id, isCorrect, selectedIndex, correctIndex);
+          quizAnswered = true;
         }, 300);
-      }
+      };
 
       window.toggleMaster = function() {
         if (!currentRoot) return;
-        var progress = StorageManager.getProgress();
-        if (progress.masteredRoots.includes(currentRoot.id)) {
-          StorageManager.unmarkRootAsMastered(currentRoot.id);
-          showFeedback('已取消掌握标记', false);
-        } else {
-          StorageManager.markRootAsMastered(currentRoot.id);
-          showFeedback('✓ 已标记为掌握！', true);
-        }
-        loadRoot();
+        var mastered = isMastered(currentRoot.id);
+        saveMastered(currentRoot.id, !mastered);
+        renderDetail(currentRoot);
+        renderRelatedItems(currentRoot);
       };
 
-      loadRoot();
+      function renderRelatedItems(item) {
+        if (!item) return;
+        var related = WordRoots.filter(function(r) { return r.id !== item.id && r.origin === item.origin; }).slice(0, 3);
+        var section = document.getElementById('relatedSection');
+        var container = document.getElementById('relatedItems');
+        if (related.length === 0) { if (section) section.style.display = 'none'; return; }
+        if (section) section.style.display = 'block';
+        if (container) {
+          container.innerHTML = '';
+          related.forEach(function(root) {
+            var mastered = isMastered(root.id);
+            var card = document.createElement('div');
+            card.className = 'root-card' + (mastered ? ' mastered' : '');
+            card.onclick = function() { window.location.href = 'root-detail.html?id=' + root.id; };
+            card.innerHTML = '<div class="root-name">' + (mastered ? '★ ' : '') + root.root + '</div>' +
+              '<div class="root-meaning">' + root.meaning + '</div>' +
+              '<div style="margin-top:12px;"><span class="root-origin">' + root.origin + '</span></div>';
+            container.appendChild(card);
+          });
+        }
+      }
+
+      // 键盘导航
+      document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'Escape') goBack();
+        if (e.key === 'm' || e.key === 'M') { e.preventDefault(); toggleMaster(); }
+        if (e.key === 'ArrowLeft' && currentRoot && currentRoot.id > 1) {
+          window.location.href = 'root-detail.html?id=' + (currentRoot.id - 1);
+        }
+        if (e.key === 'ArrowRight' && currentRoot && currentRoot.id < WordRoots.length) {
+          window.location.href = 'root-detail.html?id=' + (currentRoot.id + 1);
+        }
+      });
+
+      var item = WordRoots.find(function(r) { return r.id === rootId; });
+      renderDetail(item);
+      renderRelatedItems(item);
     })();
   </script>
 </body>

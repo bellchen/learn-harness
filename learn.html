@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>渐进学习 - OpenAI Harness Engineering 工坊</title>
-  <meta name="description" content="逐步学习 OpenAI Harness Engineering 的 25 个核心概念，包含详细说明、案例和测试题。">
+  <title>渐进学习 - Harness Engineering 工坊</title>
+  <meta name="description" content="逐步学习 Harness Engineering 的 25 个核心概念，包含详细说明、案例和测试题。">
+  <meta name="keywords" content="Harness Engineering,Agent-First,Codex,学习,渐进式学习">
+  <meta name="author" content="Harness Engineering 工坊">
+  <meta name="language" content="zh-CN">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="canonical" href="https://learn-harness.vercel.app/learn.html">
+  <meta property="og:title" content="渐进学习 - Harness Engineering 工坊">
+  <meta property="og:description" content="逐步学习 Harness Engineering 的 25 个核心概念">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learn-harness.vercel.app/learn.html">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FBBF24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -53,12 +63,18 @@
       <h3 style="margin-bottom:16px;">知识检验</h3>
       <p class="quiz-question" id="quizQuestion">-</p>
       <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-result hidden" id="quizResult"></div>
     </section>
 
     <div class="learn-nav">
       <button class="btn btn-secondary" id="prevBtn" onclick="prevRoot()">← 上一个</button>
-      <button class="btn btn-success" id="masterBtn" onclick="toggleMaster()">标记已掌握</button>
-      <button class="btn btn-secondary" id="nextBtn" onclick="nextRoot()">下一个 →</button>
+      <div class="learn-mastered-toggle">
+        <label>
+          <input type="checkbox" id="masteredCheckbox" onchange="toggleMaster()">
+          已掌握此概念
+        </label>
+      </div>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextRoot()">下一个 →</button>
     </div>
 
     <div class="flashcard-progress">
@@ -69,132 +85,149 @@
     </div>
   </main>
 
+  <div class="toast" id="toast"></div>
+
   <script src="js/wordData.js"></script>
   <script src="js/storage.js"></script>
   <script>
     (function() {
-      let currentIndex = 0;
+      var currentIndex = 0;
+      var totalItems = WordRoots.length;
 
-      function showFeedback(message, isSuccess) {
-        const toast = document.createElement('div');
-        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+      function showToast(message) {
+        var toast = document.getElementById('toast');
+        if (!toast) return;
         toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(function() { toast.remove(); }, 3000);
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 2000);
+      }
+
+      function getStartIndex() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var id = urlParams.get('id');
+        if (id) {
+          var index = WordRoots.findIndex(function(item) { return item.id == id; });
+          return index >= 0 ? index : 0;
+        }
+        var progress = StorageManager.getProgress();
+        return progress.currentRootIndex || 0;
       }
 
       function loadRoot(index) {
-        const safeIndex = ((index % WordRoots.length) + WordRoots.length) % WordRoots.length;
+        var safeIndex = ((index % totalItems) + totalItems) % totalItems;
         currentIndex = safeIndex;
-        const root = WordRoots[safeIndex];
-        const progress = StorageManager.getProgress();
-        const isMastered = progress.masteredRoots.includes(root.id);
+        var root = WordRoots[safeIndex];
+        var mastered = isMastered(root.id);
 
-        const nameEl = document.getElementById('rootName');
-        const originEl = document.getElementById('rootOrigin');
-        const meaningEl = document.getElementById('rootMeaning');
-        const descEl = document.getElementById('rootDescription');
-        const badgeEl = document.getElementById('masteredBadge');
-        const masterBtn = document.getElementById('masterBtn');
-
-        if (nameEl) nameEl.textContent = root.root;
-        if (originEl) originEl.textContent = root.origin;
-        if (meaningEl) meaningEl.textContent = root.meaning;
-        if (descEl) descEl.textContent = root.description;
-
-        if (badgeEl) badgeEl.style.display = isMastered ? 'inline-block' : 'none';
-        if (masterBtn) {
-          masterBtn.textContent = isMastered ? '取消掌握' : '标记已掌握';
-          masterBtn.className = isMastered ? 'btn btn-secondary' : 'btn btn-success';
-        }
+        document.getElementById('rootName').textContent = root.root;
+        document.getElementById('rootOrigin').textContent = root.origin;
+        document.getElementById('rootMeaning').textContent = root.meaning;
+        document.getElementById('rootDescription').textContent = root.description;
+        document.getElementById('masteredBadge').style.display = mastered ? 'inline-block' : 'none';
+        document.getElementById('masteredCheckbox').checked = mastered;
 
         renderExamples(root.examples);
         renderQuiz(root.quiz, root);
         updateProgressUI();
+        markItemVisited(root.id);
         StorageManager.updateProgress(safeIndex);
+
+        // 更新导航按钮
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+        prevBtn.disabled = currentIndex === 0;
+        prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+
+        if (currentIndex === totalItems - 1) {
+          nextBtn.textContent = '完成学习 ✓';
+          nextBtn.onclick = function() {
+            showToast('恭喜！您已完成所有概念的学习！');
+            setTimeout(function() { window.location.href = 'progress.html'; }, 1500);
+          };
+        } else {
+          nextBtn.textContent = '下一个 →';
+          nextBtn.onclick = function() { nextRoot(); };
+        }
       }
 
       function renderExamples(examples) {
-        const container = document.getElementById('examplesContainer');
+        var container = document.getElementById('examplesContainer');
         if (!container) return;
         container.innerHTML = '';
         examples.forEach(function(ex) {
-          const card = document.createElement('div');
+          var card = document.createElement('div');
           card.className = 'example-card';
-          const word = document.createElement('div');
-          word.className = 'example-word';
-          word.textContent = ex.word;
-          const meaning = document.createElement('div');
-          meaning.className = 'example-meaning';
-          meaning.textContent = ex.meaning;
-          const explanation = document.createElement('div');
-          explanation.className = 'example-explanation';
-          explanation.textContent = ex.explanation;
-          card.appendChild(word);
-          card.appendChild(meaning);
-          card.appendChild(explanation);
+          card.innerHTML = '<div class="example-word">' + ex.word + '</div>' +
+            '<div class="example-meaning">' + ex.meaning + '</div>' +
+            '<div class="example-explanation">' + ex.explanation + '</div>';
           container.appendChild(card);
         });
       }
 
       function renderQuiz(quiz, root) {
-        const questionEl = document.getElementById('quizQuestion');
-        const optionsEl = document.getElementById('quizOptions');
+        var questionEl = document.getElementById('quizQuestion');
+        var optionsEl = document.getElementById('quizOptions');
+        var resultEl = document.getElementById('quizResult');
         if (!questionEl || !optionsEl) return;
         questionEl.textContent = quiz.question;
         optionsEl.innerHTML = '';
+        if (resultEl) { resultEl.className = 'quiz-result hidden'; resultEl.textContent = ''; }
         quiz.options.forEach(function(option, index) {
-          const button = document.createElement('button');
+          var button = document.createElement('button');
           button.className = 'quiz-option';
           button.textContent = option;
-          button.onclick = function() { checkAnswer(index, quiz); };
+          button.onclick = function() { checkAnswer(index, quiz, root); };
           optionsEl.appendChild(button);
         });
       }
 
-      function checkAnswer(selectedIndex, quiz) {
-        const isCorrect = selectedIndex === quiz.correctAnswer;
-        const options = document.querySelectorAll('.quiz-option');
+      function checkAnswer(selectedIndex, quiz, root) {
+        var isCorrect = selectedIndex === quiz.correctAnswer;
+        var options = document.querySelectorAll('.quiz-option');
+        var resultEl = document.getElementById('quizResult');
         options.forEach(function(btn, index) {
           btn.disabled = true;
           if (index === quiz.correctAnswer) btn.classList.add('correct');
           else if (index === selectedIndex && !isCorrect) btn.classList.add('wrong');
         });
+        saveQuizResult(root.id, isCorrect, selectedIndex, quiz.correctAnswer);
         setTimeout(function() {
-          if (isCorrect) showFeedback('✓ 回答正确！', true);
-          else showFeedback('✗ 正确答案是：' + quiz.options[quiz.correctAnswer], false);
+          if (resultEl) {
+            resultEl.className = 'quiz-result ' + (isCorrect ? 'correct' : 'incorrect');
+            resultEl.textContent = isCorrect ? '✓ 回答正确！' : '✗ 回答错误。正确答案是 ' + String.fromCharCode(65 + quiz.correctAnswer);
+          }
         }, 300);
       }
 
       function updateProgressUI() {
-        const progressText = document.getElementById('progressText');
-        const progressBar = document.getElementById('progressBar');
-        if (progressText) progressText.textContent = (currentIndex + 1) + ' / ' + WordRoots.length;
-        if (progressBar) progressBar.style.width = ((currentIndex + 1) / WordRoots.length * 100) + '%';
+        var progressText = document.getElementById('progressText');
+        var progressBar = document.getElementById('progressBar');
+        if (progressText) progressText.textContent = (currentIndex + 1) + ' / ' + totalItems;
+        if (progressBar) progressBar.style.width = ((currentIndex + 1) / totalItems * 100) + '%';
       }
 
       window.nextRoot = function() { loadRoot(currentIndex + 1); window.scrollTo(0, 0); };
-      window.prevRoot = function() { loadRoot(currentIndex - 1); window.scrollTo(0, 0); };
+      window.prevRoot = function() { if (currentIndex > 0) { loadRoot(currentIndex - 1); window.scrollTo(0, 0); } };
       window.toggleMaster = function() {
-        const root = WordRoots[currentIndex];
-        const progress = StorageManager.getProgress();
-        if (progress.masteredRoots.includes(root.id)) {
-          StorageManager.unmarkRootAsMastered(root.id);
-          showFeedback('已取消掌握标记', false);
-        } else {
-          StorageManager.markRootAsMastered(root.id);
-          showFeedback('✓ 已标记为掌握！', true);
-        }
-        loadRoot(currentIndex);
+        var root = WordRoots[currentIndex];
+        var checkbox = document.getElementById('masteredCheckbox');
+        saveMastered(root.id, checkbox.checked);
+        document.getElementById('masteredBadge').style.display = checkbox.checked ? 'inline-block' : 'none';
       };
 
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') window.prevRoot();
-        if (e.key === 'ArrowRight') window.nextRoot();
+        if (e.key === 'ArrowLeft' && currentIndex > 0) window.prevRoot();
+        if (e.key === 'ArrowRight' && currentIndex < totalItems - 1) window.nextRoot();
+        if (e.key === ' ') {
+          e.preventDefault();
+          var checkbox = document.getElementById('masteredCheckbox');
+          checkbox.checked = !checkbox.checked;
+          toggleMaster();
+        }
       });
 
-      var startIndex = StorageManager.getProgress().currentRootIndex || 0;
-      loadRoot(startIndex);
+      currentIndex = getStartIndex();
+      loadRoot(currentIndex);
     })();
   </script>
 </body>

@@ -1,802 +1,802 @@
 const WordRoots = [
   {
     id: 1,
-    root: "Evals Framework",
-    origin: "核心框架",
-    meaning: "OpenAI 开源的 LLM 评估框架，用于系统化测试模型性能",
-    description: "Evals 是 OpenAI 开发并开源的评估框架，旨在为大语言模型（LLM）及基于 LLM 构建的系统提供标准化的评估能力。它不仅是一个代码库，还包含一个开源的基准测试注册中心。开发者可以通过提供数据（JSON格式）和参数（YAML格式）来创建评估，甚至无需编写代码。框架支持自定义评估逻辑和完成函数（Completion Functions），使得从简单的模型测试到复杂的多维度评估都成为可能。Evals 的核心理念是让构建评估变得尽可能简单，同时保持灵活性和可扩展性。",
+    root: "Harness Engineering",
+    origin: "核心理念",
+    meaning: "在 Agent-First 世界中，通过搭建脚手架让 AI 代理高效构建软件的工程方法论",
+    description: "Harness Engineering 是 OpenAI 提出的全新工程范式，核心思想是「人类掌舵，代理执行」（Humans steer, agents execute）。OpenAI 工程团队用 5 个月时间、0 行手写代码，利用 Codex 构建并发布了一个拥有内部日常用户和外部 Alpha 测试者的完整产品。团队生成了约 100 万行代码，合并了约 1,500 个 PR。工程师的角色从编写代码转变为设计环境、指定意图和构建反馈循环。构建软件仍然需要纪律，但这种纪律更多体现在脚手架（scaffolding）上——工具、抽象和保持代码库连贯的反馈循环。",
     examples: [
       {
-        word: "基础评估",
-        meaning: "使用 YAML 模板定义的简单评估任务",
-        breakdown: { root: "Evals Framework" },
-        explanation: "通过 YAML 文件定义评估参数和数据源，无需编写代码即可运行基础模型测试。例如定义 IT 工单分类任务，指定输入字段和正确标签。"
+        word: "零手写代码实验",
+        meaning: "完全由 AI 代理生成所有代码的产品开发实验",
+        breakdown: { root: "Harness Engineering" },
+        explanation: "OpenAI 团队在 5 个月内用 Codex 生成约 100 万行代码，合并约 1,500 个 PR，构建速度估计为手写的 10 倍。"
       },
       {
-        word: "自定义评估",
-        meaning: "实现自定义评估逻辑的高级用法",
-        breakdown: { root: "Evals Framework" },
-        explanation: "当基础模板无法满足需求时，开发者可以编写自定义的评估类和完成函数，实现复杂的多步骤评估流程。"
+        word: "人类掌舵",
+        meaning: "工程师负责设计环境和意图，代理负责执行",
+        breakdown: { root: "Harness Engineering" },
+        explanation: "工程师的核心工作不再是写代码，而是使代理能够完成有用的工作——提供工具、抽象概念和内部结构。"
       },
       {
-        word: "评估注册中心",
-        meaning: "存储和管理评估基准的开源仓库",
-        breakdown: { root: "Evals Framework" },
-        explanation: "Evals 框架维护了一个开源的基准测试注册中心，包含社区贡献的各类评估数据集和配置，方便开发者复用和对比。"
+        word: "脚手架纪律",
+        meaning: "工程纪律从编码转向搭建支撑代理工作的基础设施",
+        breakdown: { root: "Harness Engineering" },
+        explanation: "最大挑战在于设计环境、反馈循环和控制系统，帮助代理大规模构建和维护复杂、可靠的软件。"
       }
     ],
     quiz: {
-      question: "OpenAI Evals 框架的核心目的是什么？",
-      options: ["生成训练数据", "系统化评估 LLM 性能", "部署模型到生产", "优化模型参数"],
+      question: "OpenAI Harness Engineering 的核心理念是什么？",
+      options: ["代理完全自主工作", "人类掌舵，代理执行", "取消人类工程师", "用规则引擎替代AI"],
       correctAnswer: 1
     }
   },
   {
     id: 2,
-    root: "Test Harness",
-    origin: "核心框架",
-    meaning: "自动化测试基础设施，用于执行和管理 AI 模型评估流程",
-    description: "Test Harness（测试工具）是一种自动化测试基础设施，负责协调评估的整个生命周期：从数据加载、模型调用、结果收集到评分计算。在 OpenAI 的实践中，Test Harness 支持同步和异步两种执行模式，能够处理大规模的并发评估任务。它集成了数据管理模块、测试标准配置和执行引擎三大核心组件，确保评估流程的灵活性和可扩展性。好的 Test Harness 设计应该让开发者专注于定义评估标准，而非底层执行细节。",
+    root: "Agent-First Development",
+    origin: "核心理念",
+    meaning: "以 AI 代理为主要代码生产者的软件开发模式",
+    description: "Agent-First Development 是 Harness Engineering 的开发模式，人类几乎完全通过提示词与系统交互。在这种模式下，代码库中的所有内容均由 Codex 代理生成，包括：产品代码和测试、CI 配置和发布工具、内部开发工具、文档和设计历史、评估工具、审查评论和回复、管理仓库本身的脚本，甚至生产仪表板定义文件。最初由 3 名工程师驱动 Codex，后增长至 7 名，平均每位工程师每天处理 3.5 个 PR。",
     examples: [
       {
-        word: "执行引擎",
-        meaning: "协调评估流程的核心组件",
-        breakdown: { root: "Test Harness" },
-        explanation: "执行引擎负责调度模型调用、收集输出结果并执行评分计算，支持同步和异步两种模式以适应不同规模的评估需求。"
+        word: "全代理生成",
+        meaning: "代码库中的所有内容都由 AI 代理生成",
+        breakdown: { root: "Agent-First Development" },
+        explanation: "不仅是产品代码，还包括测试、CI配置、发布工具、文档、审查评论甚至管理仓库本身的脚本，全部由 Codex 完成。"
       },
       {
-        word: "数据管理模块",
-        meaning: "负责评估数据的加载和预处理",
-        breakdown: { root: "Test Harness" },
-        explanation: "支持多种数据源类型，包括自定义数据集、生产日志和存储的模型响应，确保评估数据的多样性和真实性。"
+        word: "提示词交互",
+        meaning: "人类通过提示词而非代码与系统交互",
+        breakdown: { root: "Agent-First Development" },
+        explanation: "工程师不再直接编写代码，而是通过精心设计的提示词向 Codex 描述意图，由代理翻译为可执行代码。"
       },
       {
-        word: "测试标准配置",
-        meaning: "定义评估指标和通过阈值的配置",
-        breakdown: { root: "Test Harness" },
-        explanation: "允许开发者定义评估指标（如准确率、召回率）和通过阈值，支持内置评估器和自定义评估逻辑的灵活组合。"
+        word: "10倍构建速度",
+        meaning: "Agent-First 模式下构建速度约为手写的 10 倍",
+        breakdown: { root: "Agent-First Development" },
+        explanation: "3-7 名工程师在 5 个月内完成约 100 万行代码和 1500 个 PR，效率远超传统手写开发。"
       }
     ],
     quiz: {
-      question: "Test Harness 的三大核心组件不包括以下哪个？",
-      options: ["数据管理模块", "执行引擎", "测试标准配置", "模型训练模块"],
+      question: "在 Agent-First Development 中，以下哪项不是由代理生成的？",
+      options: ["CI 配置", "审查评论", "产品代码", "以上全部都是代理生成的"],
       correctAnswer: 3
     }
   },
   {
     id: 3,
-    root: "Evaluation Metrics",
-    origin: "评估方法",
-    meaning: "用于量化 LLM 系统性能的评估指标体系",
-    description: "评估指标是衡量 LLM 系统表现的量化标准，通常以0-1分的范围进行评分。OpenAI 的评估体系中，指标分为多个维度：准确性（模型输出是否正确）、相关性（输出是否与输入相关）、安全性（是否产生有害内容）、一致性（输出格式是否符合预期）等。核心挑战在于指标的准确性和可靠性——由于 LLM 评估指标通常依赖 LLM 本身来判断（LLM-as-a-judge），容易产生不可靠的结果，需要精心设计的提示工程来确保评分的稳定性。",
+    root: "Deep-First Decomposition",
+    origin: "工程方法",
+    meaning: "将大目标分解为更小的构建块，逐步解锁复杂任务",
+    description: "Deep-First Decomposition（深度优先分解）是 Harness Engineering 中指导代理工作的核心方法。工程师将大的产品目标分解为更小的构建块——设计、代码、审查、测试等——然后指示代理构建这些模块。通过组合这些小模块，逐步解锁更复杂的任务。这种方法确保每个代理任务的范围足够小且明确，避免代理在过大的任务空间中迷失方向，同时通过模块的组合实现复杂功能。",
     examples: [
       {
-        word: "string_check 评分器",
-        meaning: "精确匹配模型输出与预期标签",
-        breakdown: { root: "Evaluation Metrics" },
-        explanation: "最简单的评估方式之一，通过比较模型输出文本与人工标注的正确答案是否完全匹配来评分，适用于分类任务。"
+        word: "任务分解",
+        meaning: "将复杂功能拆分为可独立执行的小任务",
+        breakdown: { root: "Deep-First Decomposition" },
+        explanation: "不是一次性要求代理完成整个功能，而是拆分为设计文档编写、核心逻辑实现、测试编写、代码审查等独立步骤。"
       },
       {
-        word: "LLM-as-Judge",
-        meaning: "使用 LLM 作为评判者来评估另一个 LLM 的输出",
-        breakdown: { root: "Evaluation Metrics" },
-        explanation: "当人工评估成本过高时，使用一个更强大的 LLM 作为裁判来评估目标模型的输出质量，需要精心设计评判提示词。"
+        word: "构建块组合",
+        meaning: "通过组合小模块逐步解锁复杂能力",
+        breakdown: { root: "Deep-First Decomposition" },
+        explanation: "先让代理构建基础工具和抽象，再利用这些基础能力处理更复杂的任务，形成能力的递进积累。"
       },
       {
-        word: "多维度评分",
-        meaning: "从多个角度综合评估模型表现",
-        breakdown: { root: "Evaluation Metrics" },
-        explanation: "好的评估不是单一指标，而是从准确性、安全性、可用性、响应速度等多个维度进行综合评估，避免优化单一指标带来的偏差。"
+        word: "明确范围控制",
+        meaning: "确保每个代理任务的范围足够小且明确",
+        breakdown: { root: "Deep-First Decomposition" },
+        explanation: "代理在范围明确的任务上表现最好，过大的任务会导致输出质量下降，需要工程师精心控制每次任务的边界。"
       }
     ],
     quiz: {
-      question: "LLM-as-Judge 方法的主要挑战是什么？",
-      options: ["计算成本太高", "评判结果的可靠性和稳定性", "无法处理多语言", "只能用于分类任务"],
+      question: "Deep-First Decomposition 的核心原则是什么？",
+      options: ["一次完成所有工作", "将大目标分解为小构建块", "只关注测试", "让代理自由发挥"],
       correctAnswer: 1
     }
   },
   {
     id: 4,
-    root: "Prompt Regression Testing",
-    origin: "评估方法",
-    meaning: "检测提示词修改是否导致模型性能下降的测试方法",
-    description: "Prompt Regression Testing 是评估工程中的关键实践，用于在修改提示词或切换模型版本后，系统化地检测性能是否出现回退。这类似于传统软件工程中的回归测试，但针对的是 LLM 的输出质量。每次修改 prompt template 后，都应该运行完整的评估套件，对比修改前后的性能指标。OpenAI 建议将此过程自动化，集成到 CI/CD 流水线中，确保每次变更都经过评估验证，防止在改进某个方面的同时意外降低了其他方面的性能。",
+    root: "Ralph Wiggum Loop",
+    origin: "反馈循环",
+    meaning: "代理自我审查、迭代修复直到所有审查者满意的闭环机制",
+    description: "Ralph Wiggum Loop 是 OpenAI 团队命名的一种代理审查闭环机制。流程是：指示 Codex 在本地审查自己的更改，请求特定的代理审查（本地和云端），然后根据反馈进行迭代，直到所有审查者满意。这种机制将大部分审查工作推向了「代理对代理」（agent-to-agent）模式，大幅减少了人类审查的负担。关键在于代理不仅能生成代码，还能审查代码并根据审查反馈自我修正，形成自驱动的质量保证循环。",
     examples: [
       {
-        word: "A/B 评估",
-        meaning: "对比两个 prompt 版本的性能差异",
-        breakdown: { root: "Prompt Regression Testing" },
-        explanation: "使用同一份测试数据集分别运行新旧两个版本的 prompt，对比各项指标的差异，确保新版本在所有关键维度都不低于旧版本。"
+        word: "自我审查",
+        meaning: "代理审查自己生成的代码变更",
+        breakdown: { root: "Ralph Wiggum Loop" },
+        explanation: "Codex 在提交 PR 前先在本地审查自己的变更，检查代码质量、风格一致性和潜在问题。"
       },
       {
-        word: "基准锁定",
-        meaning: "固定一组基准测试结果作为性能底线",
-        breakdown: { root: "Prompt Regression Testing" },
-        explanation: "在 prompt 确认有效后，将当时的评估结果锁定为基准线，后续的任何修改都不能低于这个基准，类似于软件测试中的断言。"
+        word: "代理对代理审查",
+        meaning: "将代码审查工作从人类转移到代理之间",
+        breakdown: { root: "Ralph Wiggum Loop" },
+        explanation: "一个代理生成代码，另一个代理审查并提出修改意见，生成者再根据反馈迭代修正，最大限度减少人类审查负担。"
       },
       {
-        word: "CI/CD 集成",
-        meaning: "将评估自动化集成到持续集成流程",
-        breakdown: { root: "Prompt Regression Testing" },
-        explanation: "使用 Pytest 等测试框架将评估指标的阈值作为测试通过/失败的标准，确保代码合并或部署前模型性能未发生回退。"
+        word: "迭代至满意",
+        meaning: "反复修正直到所有审查者（代理和人类）满意",
+        breakdown: { root: "Ralph Wiggum Loop" },
+        explanation: "不是一次性提交就完成，而是根据审查反馈持续迭代改进，直到代码达到所有审查标准后才合并。"
       }
     ],
     quiz: {
-      question: "Prompt Regression Testing 最类似于传统软件工程中的什么？",
-      options: ["单元测试", "回归测试", "压力测试", "安全审计"],
+      question: "Ralph Wiggum Loop 的最终目标是什么？",
+      options: ["取消代码审查", "将审查推向代理对代理模式", "只保留人类审查", "加快编码速度"],
       correctAnswer: 1
     }
   },
   {
     id: 5,
-    root: "Red Teaming",
-    origin: "安全测试",
-    meaning: "通过对抗性测试发现 AI 系统的安全漏洞和弱点",
-    description: "Red Teaming 是 AI 安全评估的核心方法之一，源自军事和网络安全领域的概念。在 AI 语境下，Red Team 的任务是系统性地寻找模型的漏洞：生成有害内容、绕过安全限制、产生错误信息等。OpenAI 在发布新模型前都会进行大规模的 Red Teaming 活动，邀请内部和外部专家尝试各种攻击手段。2025年8月，OpenAI 与 Anthropic 首次进行了联合安全测试，互相测试对方的模型，这种跨实验室协作标志着 AI 安全评估的新阶段。",
+    root: "Application Legibility",
+    origin: "可读性工程",
+    meaning: "让应用的 UI、日志和指标对 AI 代理直接可读",
+    description: "Application Legibility（应用可读性）是突破人类 QA 容量瓶颈的关键策略。OpenAI 团队致力于让应用的 UI、日志和指标对 Codex 直接「可读」。这包括三个方面：通过 Git Worktree 让代理可以为每次更改启动独立的应用实例；将 Chrome DevTools Protocol 接入代理运行时，创建处理 DOM 快照、截图和导航的技能；通过本地可观测性堆栈将日志、指标和追踪暴露给代理。这使得代理可以复现 Bug、验证修复并直接推理 UI 行为。",
     examples: [
       {
-        word: "越狱测试",
-        meaning: "尝试绕过模型的安全限制",
-        breakdown: { root: "Red Teaming" },
-        explanation: "通过精心构造的提示词尝试让模型生成被禁止的内容，测试安全防线的鲁棒性，常见手段包括角色扮演、多步引导等。"
+        word: "Git Worktree 启动",
+        meaning: "代理通过 git worktree 为每次更改启动独立实例",
+        breakdown: { root: "Application Legibility" },
+        explanation: "每个代理任务都可以在独立的工作树中启动应用实例，互不干扰，支持并行测试多个更改。"
       },
       {
-        word: "跨实验室测试",
-        meaning: "不同 AI 公司互相测试对方模型的安全性",
-        breakdown: { root: "Red Teaming" },
-        explanation: "OpenAI 与 Anthropic 的联合安全评估是典范，每家公司使用自己的内部安全协议测试对方的模型，发现各自评估中的盲点。"
+        word: "Chrome DevTools Protocol",
+        meaning: "让代理能够直接与浏览器交互",
+        breakdown: { root: "Application Legibility" },
+        explanation: "将 CDP 接入代理运行时，创建处理 DOM 快照、截图和导航的技能，使 Codex 可以复现 Bug、验证修复并推理 UI 行为。"
       },
       {
-        word: "自动化 Red Teaming",
-        meaning: "使用 AI 自动生成攻击性测试用例",
-        breakdown: { root: "Red Teaming" },
-        explanation: "利用一个 LLM 系统化地生成可能触发目标模型不当行为的测试输入，大幅提升测试覆盖面和效率。"
+        word: "可观测性集成",
+        meaning: "将日志、指标和追踪暴露给代理",
+        breakdown: { root: "Application Legibility" },
+        explanation: "代理可以使用 LogQL 查询日志、PromQL 查询指标，支持如「确保服务启动在 800ms 内完成」这样的性能验证提示。"
       }
     ],
     quiz: {
-      question: "2025年 OpenAI 与哪家公司进行了首次联合安全测试？",
-      options: ["Google DeepMind", "Meta AI", "Anthropic", "Microsoft"],
-      correctAnswer: 2
+      question: "以下哪项不是 Application Legibility 的组成部分？",
+      options: ["Git Worktree 启动", "Chrome DevTools Protocol 集成", "可观测性集成", "模型训练接口"],
+      correctAnswer: 3
     }
   },
   {
     id: 6,
-    root: "Benchmark Design",
-    origin: "评估方法",
-    meaning: "设计科学、全面的 AI 能力评估基准",
-    description: "Benchmark Design 是评估工程的基石，决定了评估结果的可信度和实用性。OpenAI 在 PaperBench 等项目中展示了先进的基准设计方法论：将复杂任务分层分解为具有明确评分标准的较小子任务，由领域专家参与评分标准的制定以确保准确性。好的基准设计需要平衡多个维度——覆盖面（测试足够多的场景）、难度梯度（从简单到困难）、真实性（反映实际使用场景）和公正性（避免数据泄漏或偏见）。",
+    root: "Repository Knowledge",
+    origin: "知识管理",
+    meaning: "将仓库知识作为系统记录（System of Record），让代理高效获取上下文",
+    description: "Repository Knowledge 是 Harness Engineering 中的上下文管理策略，核心思想是「地图而非百科全书」（Maps, not encyclopedias）。团队避免使用单一的大型 AGENTS.md 指令文件，因为它会占用稀缺的上下文资源、导致指导失效、容易腐烂且难以验证。取而代之的是将 AGENTS.md（约 100 行）作为「目录」，指向 docs/ 目录中更深层次的事实来源。代理从一个小而稳定的入口点开始，被教导下一步去哪里查找，而不是一开始就被信息淹没。",
     examples: [
       {
-        word: "PaperBench",
-        meaning: "评估 AI 复现科研论文能力的基准",
-        breakdown: { root: "Benchmark Design" },
-        explanation: "OpenAI 开发的基准测试，要求 AI Agent 从头复制 20 篇 ICML 2024 顶会论文，包含 8316 个可单独评分的子任务，评分标准与论文作者共同开发。"
+        word: "地图策略",
+        meaning: "AGENTS.md 作为目录指向深层文档，而非巨型百科",
+        breakdown: { root: "Repository Knowledge" },
+        explanation: "AGENTS.md 保持约 100 行精简，作为入口目录指向 docs/ 中的 design-docs/、exec-plans/、product-specs/ 等详细文档。"
       },
       {
-        word: "HealthBench",
-        meaning: "评估 AI 在医疗健康领域能力的基准",
-        breakdown: { root: "Benchmark Design" },
-        explanation: "由来自60个国家的262名医生参与创建，包含5000段核心测试对话和48562个医生编写的评分标准，覆盖紧急情况、全球健康等多个维度。"
+        word: "渐进式披露",
+        meaning: "代理从小入口开始，按需查找深层知识",
+        breakdown: { root: "Repository Knowledge" },
+        explanation: "代理不需要一次加载所有上下文，而是从入口文件出发，根据当前任务需要逐步发现和加载相关文档。"
       },
       {
-        word: "分层评分标准",
-        meaning: "将复杂任务分解为可独立评分的子任务",
-        breakdown: { root: "Benchmark Design" },
-        explanation: "好的基准不是单一的通过/失败判断，而是将任务分层分解，让每个子任务都有明确的评分标准，从而提供细粒度的能力分析。"
+        word: "文档园艺代理",
+        meaning: "自动扫描和修复过时文档的后台代理",
+        breakdown: { root: "Repository Knowledge" },
+        explanation: "专门的代理任务会扫描过时或不再反映实际代码行为的文档，并自动打开修复 PR，确保文档始终与代码同步。"
       }
     ],
     quiz: {
-      question: "PaperBench 包含多少个可单独评分的子任务？",
-      options: ["1000", "5000", "8316", "48562"],
-      correctAnswer: 2
+      question: "OpenAI 团队为什么避免使用单一的大型 AGENTS.md？",
+      options: ["技术限制", "占用上下文资源且容易失效", "团队规模太小", "Codex 不支持 Markdown"],
+      correctAnswer: 1
     }
   },
   {
     id: 7,
-    root: "Data Source Config",
-    origin: "核心框架",
-    meaning: "定义评估数据的模式和来源的配置",
-    description: "Data Source Config 是 OpenAI Evals 框架中定义测试数据结构的配置层。它规定了数据集中每一项必须包含哪些字段及其类型。数据通常使用 JSONL（JSON Lines）格式存储，每行一条测试数据。通过 API 或 Dashboard 上传数据时，需要设置 purpose 为 'evals'。良好的数据源配置确保评估数据的一致性和可验证性，是构建可复用评估流程的基础。",
+    root: "Context as Existence",
+    origin: "知识管理",
+    meaning: "代理无法在上下文中访问的内容，对它来说不存在",
+    description: "Context as Existence（上下文即存在）是 Agent-First 开发的核心认知。代理在运行时无法在上下文中访问的内容，对它来说实际上不存在。因此，知识必须存在于仓库本地的版本化产物中——代码、Markdown、Schema、可执行计划——而不是 Google Docs 或聊天记录中。团队随着时间推移，将更多上下文（如架构模式的对齐讨论）推入仓库，就像入职新团队成员一样。技术选择上，偏好可以在仓库内部完全内化和推理的依赖项，倾向于「无聊」的技术——可组合、API 稳定、训练集中有代表。",
     examples: [
       {
-        word: "JSONL 数据格式",
-        meaning: "每行一条 JSON 记录的数据格式",
-        breakdown: { root: "Data Source Config" },
-        explanation: "评估数据使用 JSONL 格式，每行包含一个完整的测试用例，便于流式处理和大规模数据的增量更新。"
+        word: "版本化产物",
+        meaning: "所有知识以代码、Markdown、Schema 等形式存在于仓库中",
+        breakdown: { root: "Context as Existence" },
+        explanation: "架构决策、设计讨论、产品规格等都不能只存在于聊天记录或外部文档中，必须版本化存储在代码仓库里。"
       },
       {
-        word: "Schema 定义",
-        meaning: "数据字段的类型和结构约束",
-        breakdown: { root: "Data Source Config" },
-        explanation: "通过 schema 定义确保每条测试数据都包含必要的字段，如输入文本、期望输出、分类标签等，防止数据不一致导致评估失败。"
+        word: "无聊技术偏好",
+        meaning: "选择可组合、API 稳定、训练集中有代表的技术",
+        breakdown: { root: "Context as Existence" },
+        explanation: "代理对训练数据中常见的技术表现更好，「无聊」但稳定的技术比新潮但冷门的技术更适合 Agent-First 开发。"
       },
       {
-        word: "数据上传 API",
-        meaning: "通过 API 上传评估数据的接口",
-        breakdown: { root: "Data Source Config" },
-        explanation: "使用 OpenAI 的 /v1/files 端点上传 JSONL 文件，设置 purpose 为 'evals'，即可在评估运行中引用该数据集。"
+        word: "上下文入职",
+        meaning: "像入职新员工一样持续向仓库注入上下文",
+        breakdown: { root: "Context as Existence" },
+        explanation: "随着项目推进，不断将架构讨论、设计决策等隐性知识显性化并存入仓库，让代理可以在任务中访问。"
       }
     ],
     quiz: {
-      question: "OpenAI Evals 默认使用什么数据格式？",
-      options: ["CSV", "XML", "JSONL", "Parquet"],
+      question: "「Context as Existence」原则要求知识存储在哪里？",
+      options: ["Google Docs", "聊天记录", "仓库本地的版本化产物", "外部Wiki"],
       correctAnswer: 2
     }
   },
   {
     id: 8,
-    root: "Testing Criteria",
-    origin: "核心框架",
-    meaning: "定义评估通过标准和评分规则的配置",
-    description: "Testing Criteria 是 Evals 框架中定义评估标准的核心概念。它规定了如何评判模型的输出是否正确或优质。OpenAI 提供了多种内置评分器（Grader），如 string_check（精确匹配）、model_graded（模型评分）等，开发者也可以实现自定义评分逻辑。Testing Criteria 使用模板语法（{{ sample.output_text }}）引用模型输出，与数据中的基准真值进行比较。通过阈值的设定让评估结果可以自动化判定通过或失败。",
+    root: "Layered Architecture",
+    origin: "架构强制",
+    meaning: "严格分层的代码架构：Types → Config → Repo → Service → Runtime → UI",
+    description: "Layered Architecture 是 OpenAI 团队在 Harness Engineering 中强制执行的代码架构模式。每个业务领域分为固定层：Types → Config → Repo → Service → Runtime → UI，代码只能「向前」依赖（即上层只能依赖下层），横切关注点通过单一接口进入。这些规则通过自定义 linter 和结构测试机械地强制执行。代理在具有严格边界和可预测结构的环境中效果最好，这种分层架构为代理提供了清晰的代码组织框架。",
     examples: [
       {
-        word: "string_check",
-        meaning: "精确字符串匹配的评分器",
-        breakdown: { root: "Testing Criteria" },
-        explanation: "最基础的评分方式，将模型输出与预期标签进行精确比较，支持 eq（完全相等）、contains（包含）等操作符。"
+        word: "单向依赖",
+        meaning: "代码只能向前依赖，上层依赖下层",
+        breakdown: { root: "Layered Architecture" },
+        explanation: "UI 层可以依赖 Service 层，但 Service 层不能反向依赖 UI 层，确保代码依赖关系清晰可预测。"
       },
       {
-        word: "model_graded",
-        meaning: "使用 LLM 进行评分的评分器",
-        breakdown: { root: "Testing Criteria" },
-        explanation: "对于开放式输出，使用另一个 LLM 作为评判者，根据预定义的评分标准对模型输出进行打分，适用于主观性较强的任务。"
+        word: "横切关注点",
+        meaning: "通过单一接口统一处理跨层关注点",
+        breakdown: { root: "Layered Architecture" },
+        explanation: "日志、监控、认证等横切关注点不散布在各层中，而是通过统一的接口注入，减少代码耦合。"
       },
       {
-        word: "阈值设定",
-        meaning: "定义评估通过的最低分数线",
-        breakdown: { root: "Testing Criteria" },
-        explanation: "为每个评估指标设定通过阈值，如准确率不低于95%，使得评估结果可以自动化判定，集成到 CI/CD 流程中。"
+        word: "机械强制执行",
+        meaning: "通过自定义 linter 和结构测试自动验证架构规则",
+        breakdown: { root: "Layered Architecture" },
+        explanation: "不依赖人工审查来保证架构一致性，而是编写自动化规则检测违规的依赖关系和代码组织。"
       }
     ],
     quiz: {
-      question: "以下哪个不是 OpenAI Evals 内置的评分器类型？",
-      options: ["string_check", "model_graded", "neural_compare", "custom grader"],
+      question: "在分层架构中，以下哪个依赖方向是正确的？",
+      options: ["Types 依赖 UI", "Service 依赖 Runtime", "UI 依赖 Service", "Config 依赖 Repo"],
       correctAnswer: 2
     }
   },
   {
     id: 9,
-    root: "Synthetic Data Generation",
-    origin: "数据工程",
-    meaning: "使用 AI 自动生成评估测试数据集",
-    description: "Synthetic Data Generation（合成数据生成）是解决评估数据集创建瓶颈的关键技术。手动创建涵盖所有边缘情况的测试用例既耗时又困难，而使用 LLM 基于给定上下文自动生成输入-输出对，可以大幅提升评估数据的覆盖面和多样性。OpenAI 建议使用高质量模型（如 GPT-4）来生成期望输出，以减少幻觉。合成数据不仅可以扩充测试集，还可以系统化地生成边缘案例和对抗性输入。",
+    root: "Taste Invariants",
+    origin: "架构强制",
+    meaning: "将代码品味和风格规范编码为可自动验证的不变量",
+    description: "Taste Invariants（品味不变量）是 Harness Engineering 中保持代码库一致性的方法。团队不做微观管理，而是通过强制执行不变量来保持连贯性。静态强制执行的内容包括：结构化日志、Schema 和类型的命名约定、文件大小限制以及平台特定的可靠性要求。关键创新在于，lint 错误消息被编写为向代理上下文注入修复指令——这意味着当代理违反规则时，它会自动获得如何修复的指导。权衡策略是在中心边界强制执行，允许局部自治。",
     examples: [
       {
-        word: "黄金数据生成",
-        meaning: "使用 LLM 生成高质量的标注数据",
-        breakdown: { root: "Synthetic Data Generation" },
-        explanation: "基于给定的上下文和主题，利用高质量 LLM 生成标准的输入-输出对，作为评估的基准真值（Ground Truth）。"
+        word: "Lint 修复指令",
+        meaning: "lint 错误消息中嵌入代理可读的修复指导",
+        breakdown: { root: "Taste Invariants" },
+        explanation: "自定义 linter 的错误消息不仅描述问题，还包含具体的修复指令，代理看到错误后可以直接修复，无需人工干预。"
       },
       {
-        word: "边缘案例生成",
-        meaning: "自动生成极端和异常的测试输入",
-        breakdown: { root: "Synthetic Data Generation" },
-        explanation: "指示 LLM 生成各种边缘情况的测试输入，如超长文本、多语言混合、特殊字符等，提升评估的覆盖面。"
+        word: "中心强制局部自治",
+        meaning: "在核心边界严格执行，细节允许灵活",
+        breakdown: { root: "Taste Invariants" },
+        explanation: "架构层级、命名约定等核心规则严格强制执行，但代码风格等细节允许代理自由发挥，只要输出正确且可维护。"
       },
       {
-        word: "对抗性数据增强",
-        meaning: "生成旨在触发模型错误的测试数据",
-        breakdown: { root: "Synthetic Data Generation" },
-        explanation: "系统化地生成可能导致模型犯错的测试输入，如误导性问题、歧义表述等，帮助发现模型的薄弱环节。"
+        word: "结构化日志",
+        meaning: "强制所有日志使用结构化格式",
+        breakdown: { root: "Taste Invariants" },
+        explanation: "通过 lint 规则要求所有日志输出使用结构化格式，便于代理通过 LogQL 查询和分析日志内容。"
       }
     ],
     quiz: {
-      question: "使用合成数据生成评估集时，OpenAI 建议用什么生成期望输出？",
-      options: ["规则引擎", "小型模型", "高质量大模型", "人工标注"],
-      correctAnswer: 2
-    }
-  },
-  {
-    id: 10,
-    root: "Safety Evaluation Hub",
-    origin: "安全测试",
-    meaning: "OpenAI 的安全评估结果公示平台",
-    description: "Safety Evaluation Hub 是 OpenAI 推出的安全评估中心，是一个公开的网页平台，展示模型在各种安全测试中的得分，包括有害内容生成、越狱攻击抵御和幻觉检测等维度。OpenAI 承诺持续更新该平台，在每次重大模型更新时发布最新的安全测试结果。这种透明化的做法旨在推动 AI 安全标准的建立，让公众和监管机构能够了解模型的安全特性和局限性。",
-    examples: [
-      {
-        word: "安全评分看板",
-        meaning: "展示模型安全指标的可视化面板",
-        breakdown: { root: "Safety Evaluation Hub" },
-        explanation: "以直观的方式展示模型在各安全维度上的得分，帮助用户和开发者快速了解模型的安全特性。"
-      },
-      {
-        word: "持续更新机制",
-        meaning: "随模型更新同步发布安全测试结果",
-        breakdown: { root: "Safety Evaluation Hub" },
-        explanation: "每次重大模型更新后，OpenAI 会重新运行完整的安全测试套件，并在 Hub 上更新结果，确保信息的时效性。"
-      },
-      {
-        word: "透明化报告",
-        meaning: "公开分享安全测试的方法和结果",
-        breakdown: { root: "Safety Evaluation Hub" },
-        explanation: "不仅公布测试结果，还分享测试方法论和评估标准，推动行业建立统一的 AI 安全评估标准。"
-      }
-    ],
-    quiz: {
-      question: "Safety Evaluation Hub 主要评估哪些维度？",
-      options: ["模型速度和成本", "有害内容、越狱和幻觉", "代码生成准确率", "多语言翻译质量"],
+      question: "Taste Invariants 中 lint 错误消息的独特设计是什么？",
+      options: ["只显示错误行号", "嵌入代理可读的修复指令", "自动删除违规代码", "发送邮件通知人类"],
       correctAnswer: 1
     }
   },
   {
-    id: 11,
-    root: "LLM Test Case",
-    origin: "数据工程",
-    meaning: "LLM 评估的基本数据单元，包含输入、输出和上下文",
-    description: "LLM Test Case 是评估框架的基础数据结构，定义了评估一个 LLM 系统所需的所有信息。必需参数包括 input（用户输入）和 actual_output（系统实际输出），可选参数包括 expected_output（期望输出）、context（原始上下文/真值）和 retrieval_context（RAG系统检索到的文本块）。这种标准化的数据结构使得不同的评估指标可以在统一的接口上工作，提高了评估流程的一致性和可复用性。",
+    id: 10,
+    root: "Docs Structure",
+    origin: "知识管理",
+    meaning: "结构化的仓库文档体系，作为代理的知识来源",
+    description: "Docs Structure 是仓库知识管理的具体实现。OpenAI 团队将文档按功能组织在 docs/ 目录下，包括：design-docs/（设计文档、核心信念）、exec-plans/（活动计划、已完成计划、技术债务跟踪器）、generated/（如数据库模式）、product-specs/（产品规格说明）、references/（设计系统引用、工具引用如 nixpacks、uv）。此外还有 DESIGN.md、FRONTEND.md、QUALITY_SCORE.md、RELIABILITY.md、SECURITY.md 等专题文档。使用专用 linter 和 CI 作业验证知识库的更新、交叉链接和结构正确性。",
     examples: [
       {
-        word: "必需参数",
-        meaning: "input 和 actual_output 是每个测试用例必须包含的",
-        breakdown: { root: "LLM Test Case" },
-        explanation: "input 是用户的输入查询，actual_output 是 LLM 系统的实际响应，这两个是评估的最基本要素。"
+        word: "design-docs/",
+        meaning: "存储设计文档和核心信念的目录",
+        breakdown: { root: "Docs Structure" },
+        explanation: "记录架构决策、设计理念和核心原则，代理在进行架构相关任务时首先参考这些文档。"
       },
       {
-        word: "RAG 上下文",
-        meaning: "retrieval_context 记录 RAG 系统检索到的文本",
-        breakdown: { root: "LLM Test Case" },
-        explanation: "对于 RAG 系统，需要额外记录检索环节返回的文本块，用于评估检索质量、上下文相关性等指标。"
+        word: "exec-plans/",
+        meaning: "存储执行计划和技术债务跟踪的目录",
+        breakdown: { root: "Docs Structure" },
+        explanation: "包含当前活动计划、已完成计划的归档和技术债务跟踪器，帮助代理了解项目的优先级和待处理事项。"
       },
       {
-        word: "期望输出",
-        meaning: "expected_output 是人工标注的正确答案",
-        breakdown: { root: "LLM Test Case" },
-        explanation: "并非所有评估都需要期望输出，但对于有明确正确答案的任务（如分类、抽取），它是计算准确率的必要条件。"
+        word: "CI 验证文档",
+        meaning: "使用 CI 自动验证文档的时效性和正确性",
+        breakdown: { root: "Docs Structure" },
+        explanation: "专用的 linter 和 CI 作业检查文档是否过时、交叉链接是否有效、结构是否正确，防止文档腐烂。"
       }
     ],
     quiz: {
-      question: "LLM Test Case 中哪些是必需参数？",
-      options: ["input 和 expected_output", "input 和 actual_output", "context 和 retrieval_context", "全部都是必需的"],
+      question: "以下哪个不是 OpenAI 团队 docs/ 目录下的标准子目录？",
+      options: ["design-docs/", "exec-plans/", "product-specs/", "training-data/"],
+      correctAnswer: 3
+    }
+  },
+  {
+    id: 11,
+    root: "Agent Readability",
+    origin: "可读性工程",
+    meaning: "优先为代理优化代码的可读性，而非人类审美偏好",
+    description: "Agent Readability（代理可读性）是 Harness Engineering 的核心设计目标。既然代码库完全由代理生成，就应该首先优化 Codex 的可读性。这意味着技术选择偏好可以在仓库内部完全内化和推理的依赖项和抽象。有时让代理重新实现子集功能比绕过公共库的不透明上游行为更便宜——例如团队实现了自己的 map-with-concurrency 辅助工具，而不是使用通用的 p-limit 包，以便与 OpenTelemetry 集成。代码风格可能不总是符合人类偏好，只要输出正确、可维护且对未来代理运行可读即可。",
+    examples: [
+      {
+        word: "内部重新实现",
+        meaning: "代理重新实现功能子集而非引用不透明的外部库",
+        breakdown: { root: "Agent Readability" },
+        explanation: "团队实现了自己的 map-with-concurrency 工具替代 p-limit，因为内部实现对代理来说更透明可推理，且更易与 OpenTelemetry 集成。"
+      },
+      {
+        word: "代理优先可读",
+        meaning: "代码首先优化代理的理解能力",
+        breakdown: { root: "Agent Readability" },
+        explanation: "代码组织、命名和结构优先考虑代理能否高效理解和修改，人类美学偏好退居其次。"
+      },
+      {
+        word: "仓库内化推理",
+        meaning: "选择代理可以在仓库内部完全理解的技术",
+        breakdown: { root: "Agent Readability" },
+        explanation: "偏好「无聊」技术（API 稳定、训练集中有代表），避免需要大量外部知识才能理解的新潮框架。"
+      }
+    ],
+    quiz: {
+      question: "为什么团队选择自己实现 map-with-concurrency 而非使用 p-limit？",
+      options: ["p-limit 有 Bug", "内部实现对代理更透明可推理", "p-limit 性能差", "团队不允许使用开源库"],
       correctAnswer: 1
     }
   },
   {
     id: 12,
-    root: "Async Evaluation",
-    origin: "工程实践",
-    meaning: "异步执行评估任务以提升大规模测试效率",
-    description: "Async Evaluation（异步评估）是处理大规模评估任务的关键技术。当测试数据集包含数千个用例时，串行执行会导致评估过程耗时数小时。通过异步编程（如Python的asyncio），可以并发执行多个模型调用和评分计算，将评估时间从小时级缩短到分钟级。OpenAI 的 Evals API 原生支持异步执行，评估运行提交后在后台异步进行，开发者可以通过 API 轮询状态或配置 Webhook 接收完成通知。",
+    root: "Observability Stack",
+    origin: "可读性工程",
+    meaning: "本地可观测性堆栈，让代理能够查询日志、指标和追踪",
+    description: "Observability Stack（可观测性堆栈）是 Application Legibility 的核心组件之一。OpenAI 团队搭建了本地的可观测性基础设施，将日志、指标和追踪暴露给 Codex 代理。代理可以使用 LogQL 查询日志、使用 PromQL 查询指标，支持诸如「确保服务启动在 800ms 内完成」或「关键用户旅程的任何 span 不超过 2 秒」这样的性能验证提示。这使得代理不仅能写代码，还能验证代码的运行时行为是否符合性能要求。",
     examples: [
       {
-        word: "并发模型调用",
-        meaning: "同时发起多个模型推理请求",
-        breakdown: { root: "Async Evaluation" },
-        explanation: "使用 asyncio.gather 同时发起多个 API 调用，充分利用 API 的并发限制，大幅缩短等待时间。"
+        word: "LogQL 查询",
+        meaning: "代理使用 LogQL 语法查询和分析日志",
+        breakdown: { root: "Observability Stack" },
+        explanation: "Codex 可以直接使用 LogQL 查询日志，定位错误、分析行为模式，就像人类工程师使用 Grafana 一样。"
       },
       {
-        word: "Webhook 通知",
-        meaning: "评估完成后自动触发回调",
-        breakdown: { root: "Async Evaluation" },
-        explanation: "订阅 eval.run.succeeded 等事件，评估完成后自动收到通知，无需持续轮询状态，适合生产环境的自动化流程。"
+        word: "PromQL 指标",
+        meaning: "代理使用 PromQL 查询性能指标",
+        breakdown: { root: "Observability Stack" },
+        explanation: "代理可以通过 PromQL 查询 Prometheus 指标，验证如「服务启动时间不超过 800ms」等性能约束。"
       },
       {
-        word: "批量处理",
-        meaning: "将测试用例分批提交执行",
-        breakdown: { root: "Async Evaluation" },
-        explanation: "对于超大规模数据集，将用例分批提交，每批异步执行，既保证效率又避免超过 API 速率限制。"
+        word: "性能验证提示",
+        meaning: "用自然语言描述性能要求，代理自动验证",
+        breakdown: { root: "Observability Stack" },
+        explanation: "工程师可以用提示词描述性能目标，如「关键用户旅程的任何 span 不超过 2 秒」，代理自动查询指标验证。"
       }
     ],
     quiz: {
-      question: "异步评估的主要优势是什么？",
-      options: ["提高评分准确性", "减少 API 费用", "大幅缩短评估时间", "简化代码逻辑"],
-      correctAnswer: 2
+      question: "OpenAI 团队的代理使用什么语言查询日志？",
+      options: ["SQL", "LogQL", "GraphQL", "KQL"],
+      correctAnswer: 1
     }
   },
   {
     id: 13,
-    root: "Hallucination Detection",
-    origin: "安全测试",
-    meaning: "检测 AI 模型生成虚假或不真实信息的评估方法",
-    description: "Hallucination Detection（幻觉检测）是 AI 安全评估的核心挑战之一。LLM 可能生成看似合理但实际上不真实的信息，这在医疗、法律、金融等高风险领域尤其危险。评估幻觉的方法包括：事实核查（与已知事实对照）、忠实度评估（输出是否忠于提供的上下文）、自洽性检查（多次生成的答案是否一致）。OpenAI 的 Safety Evaluation Hub 将幻觉检测作为三大核心安全维度之一，体现了其在模型发布流程中的重要性。",
+    root: "End-to-End Autonomy",
+    origin: "自主性提升",
+    meaning: "代理可以端到端地驱动从 Bug 复现到 PR 合并的完整流程",
+    description: "End-to-End Autonomy（端到端自主性）是 Harness Engineering 追求的里程碑。随着开发循环的更多部分被直接编码到系统中，Codex 达到了一个重要里程碑：给定一个提示，代理可以完成完整流程——验证代码库状态、复现 Bug、录制失败视频、实施修复、验证修复、录制成功视频、打开 PR、响应审查反馈、检测并修复构建失败、仅在需要判断时升级给人类、最终合并更改。这展示了 AI 代理在软件工程中的最高自主级别。",
     examples: [
       {
-        word: "事实核查",
-        meaning: "将模型输出与已知事实进行对照验证",
-        breakdown: { root: "Hallucination Detection" },
-        explanation: "使用可靠的知识库或搜索引擎验证模型声称的事实是否正确，是最直接的幻觉检测方式。"
+        word: "Bug 复现与视频录制",
+        meaning: "代理自动复现 Bug 并录制视频证据",
+        breakdown: { root: "End-to-End Autonomy" },
+        explanation: "代理通过 CDP 驱动浏览器复现报告的 Bug，录制展示失败的视频作为证据，然后实施修复并录制第二个视频展示解决结果。"
       },
       {
-        word: "忠实度评估",
-        meaning: "检查输出是否忠于提供的上下文信息",
-        breakdown: { root: "Hallucination Detection" },
-        explanation: "对于 RAG 系统，评估模型的回答是否只基于检索到的上下文，没有添加虚构信息，常用于文档问答场景。"
+        word: "人类升级机制",
+        meaning: "仅在需要判断时才升级给人类",
+        breakdown: { root: "End-to-End Autonomy" },
+        explanation: "代理在整个流程中自主决策，只有在遇到需要产品判断或权衡取舍的决策时，才将问题升级给人类工程师。"
       },
       {
-        word: "自洽性检查",
-        meaning: "多次查询同一问题检查答案一致性",
-        breakdown: { root: "Hallucination Detection" },
-        explanation: "如果模型对同一个问题多次给出不同的答案，说明它可能在某些回答中产生了幻觉，一致性越低幻觉风险越高。"
+        word: "构建失败自修复",
+        meaning: "代理自动检测并修复 CI 构建失败",
+        breakdown: { root: "End-to-End Autonomy" },
+        explanation: "提交 PR 后如果 CI 构建失败，代理会自动分析失败原因并推送修复提交，无需人工干预。"
       }
     ],
     quiz: {
-      question: "以下哪种不是常见的幻觉检测方法？",
-      options: ["事实核查", "忠实度评估", "自洽性检查", "响应速度测试"],
-      correctAnswer: 3
+      question: "在端到端自主流程中，代理什么时候需要人类介入？",
+      options: ["每次代码审查", "每次构建失败", "仅在需要判断时", "从不需要"],
+      correctAnswer: 2
     }
   },
   {
     id: 14,
-    root: "Completion Functions",
-    origin: "核心框架",
-    meaning: "Evals 框架中封装模型调用逻辑的可插拔组件",
-    description: "Completion Functions 是 OpenAI Evals 框架的核心抽象之一，它将模型调用逻辑封装为可插拔的组件。通过这种抽象，开发者可以轻松切换底层模型（GPT-3.5、GPT-4、自定义模型等），而无需修改评估逻辑。自定义 Completion Functions 允许在模型调用前后添加预处理和后处理逻辑，如提示词模板填充、输出格式化、多步推理链等。这种设计模式实现了评估逻辑与模型实现的解耦。",
+    root: "Throughput Philosophy",
+    origin: "合并哲学",
+    meaning: "高吞吐量下「修正便宜，等待昂贵」的合并策略",
+    description: "Throughput Philosophy 是 Codex 高吞吐量带来的合并哲学变革。随着代理产出速度远超人类审查能力，传统的工程规范变得适得其反。新哲学是：PR 存活时间短，测试错误通常通过后续运行解决而不是无限期阻塞进度。核心认知是「修正便宜，等待昂贵」（Fixes are cheap; waiting is expensive）——在代理吞吐量远超人类注意力的系统中，快速合并加后续修正比阻塞等待完美更高效。",
     examples: [
       {
-        word: "模型切换",
-        meaning: "通过配置轻松切换不同的底层模型",
-        breakdown: { root: "Completion Functions" },
-        explanation: "只需修改配置中的模型名称，即可在 GPT-3.5、GPT-4 等不同模型间切换运行同一评估，方便横向对比。"
+        word: "短存活 PR",
+        meaning: "PR 快速审查快速合并，不长时间阻塞",
+        breakdown: { root: "Throughput Philosophy" },
+        explanation: "代理生成的 PR 应该快速被审查和合并，避免大量 PR 堆积等待人类审查，阻碍整体开发进度。"
       },
       {
-        word: "预处理管道",
-        meaning: "在模型调用前对输入进行处理",
-        breakdown: { root: "Completion Functions" },
-        explanation: "在发送到模型之前，自动填充提示词模板、添加系统指令、格式化输入数据等，确保每次调用的一致性。"
+        word: "后续修复策略",
+        meaning: "测试错误通过后续代理运行解决而非阻塞",
+        breakdown: { root: "Throughput Philosophy" },
+        explanation: "小的测试错误不阻塞 PR 合并，而是在下一个代理任务中作为修复目标，保持开发流水线的持续流动。"
       },
       {
-        word: "多步推理",
-        meaning: "在 Completion Function 中实现链式调用",
-        breakdown: { root: "Completion Functions" },
-        explanation: "自定义的 Completion Function 可以实现 Chain-of-Thought 等多步推理策略，先分析再回答，提升输出质量。"
+        word: "修正便宜等待昂贵",
+        meaning: "代理修复 Bug 的成本远低于等待完美的成本",
+        breakdown: { root: "Throughput Philosophy" },
+        explanation: "代理可以在几分钟内完成修复，而阻塞一个 PR 等待人类审查可能浪费数小时的代理产能。"
       }
     ],
     quiz: {
-      question: "Completion Functions 的核心设计目的是什么？",
-      options: ["提升模型速度", "实现评估逻辑与模型实现的解耦", "降低 API 费用", "自动优化提示词"],
+      question: "Throughput Philosophy 的核心认知是什么？",
+      options: ["代码质量最重要", "修正便宜，等待昂贵", "每个 PR 必须完美", "人类审查不可替代"],
       correctAnswer: 1
     }
   },
   {
     id: 15,
-    root: "Context Relevancy",
-    origin: "RAG评估",
-    meaning: "衡量检索到的上下文与用户查询的相关程度",
-    description: "Context Relevancy（上下文相关性）是 RAG（检索增强生成）系统评估的核心指标之一。它衡量检索模块返回的文档片段与用户原始查询的相关程度。计算方法通常是：遍历 retrieval_context 中的每个节点，使用 LLM 判断每个节点是否与输入相关，然后计算分数 = 相关节点数 / 总节点数。这个指标直接影响 RAG 系统的输出质量——如果检索到的上下文不相关，模型即使再强也难以给出好的回答。",
+    root: "Entropy & Garbage Collection",
+    origin: "代码维护",
+    meaning: "应对代理生成代码中的模式漂移和技术债务的清理机制",
+    description: "Entropy & Garbage Collection（熵与垃圾回收）是 Harness Engineering 中应对完全代理自主性引入的新问题。Codex 会复制仓库中现有的模式——包括不优化的模式——导致代码漂移（drift）。解决方案是将「黄金原则」（如偏好共享实用程序包、验证边界而不是 YOLO-style 探测数据）直接编码到仓库中，并建立定期的清理过程。后台 Codex 任务扫描偏差，更新质量等级，打开针对性的重构 PR。大多数可以在一分钟内审查并自动合并，实现技术债务的持续小增量偿还。",
     examples: [
       {
-        word: "节点级评估",
-        meaning: "逐个评估每个检索到的文档片段",
-        breakdown: { root: "Context Relevancy" },
-        explanation: "不是整体打分，而是对检索结果中的每个文档片段独立判断其与查询的相关性，提供更细粒度的评估。"
+        word: "黄金原则编码",
+        meaning: "将最佳实践直接编码到仓库中",
+        breakdown: { root: "Entropy & Garbage Collection" },
+        explanation: "如「偏好共享实用程序包」「验证边界而不是 YOLO-style 探测数据」等原则写入文档，代理生成代码时自动遵守。"
       },
       {
-        word: "上下文精确度",
-        meaning: "考虑检索结果排序的高级指标",
-        breakdown: { root: "Context Relevancy" },
-        explanation: "不仅评估相关性，还考虑相关文档在检索结果中的排名位置，越靠前越好，类似于信息检索中的 NDCG 指标。"
+        word: "后台扫描代理",
+        meaning: "后台 Codex 任务扫描代码偏差并自动修复",
+        breakdown: { root: "Entropy & Garbage Collection" },
+        explanation: "专门的后台任务定期扫描代码库，发现偏离黄金原则的代码，自动打开重构 PR，大多数可在一分钟内审查合并。"
       },
       {
-        word: "检索噪声分析",
-        meaning: "识别降低 RAG 性能的不相关检索结果",
-        breakdown: { root: "Context Relevancy" },
-        explanation: "通过分析不相关文档的特征，帮助优化检索策略，如调整向量搜索的相似度阈值或改进文档分块策略。"
+        word: "持续增量偿还",
+        meaning: "以小增量连续偿还技术债务",
+        breakdown: { root: "Entropy & Garbage Collection" },
+        explanation: "不让技术债务累积并在痛苦的爆发中解决，而是通过后台代理任务持续地、小增量地偿还，保持代码库健康。"
       }
     ],
     quiz: {
-      question: "Context Relevancy 的计算公式是什么？",
-      options: ["正确答案数/总问题数", "相关节点数/总节点数", "检索时间/基准时间", "输出长度/输入长度"],
+      question: "Codex 代码漂移的原因是什么？",
+      options: ["模型退化", "代理复制仓库中现有的模式包括不优化的", "人类干预导致", "外部依赖变化"],
       correctAnswer: 1
     }
   },
   {
     id: 16,
-    root: "Evaluation Dataset",
-    origin: "数据工程",
-    meaning: "用于评估的结构化测试数据集合",
-    description: "Evaluation Dataset 是评估工程的数据基础，包含了一组结构化的测试用例，每个用例对应一个待评估的场景。创建全面的评估数据集是最耗时的环节之一——需要覆盖正常场景、边缘情况和对抗性输入。OpenAI 建议将评估数据按功能维度分组（如安全性、准确性、格式合规性），并持续从生产环境的日志中补充新的测试用例。数据集的质量直接决定了评估结果的可信度。",
+    root: "Long-Running Tasks",
+    origin: "执行模式",
+    meaning: "Codex 在单个任务上可连续工作长达 6 小时",
+    description: "Long-Running Tasks 是 Codex 代理的一个关键能力特性。Codex 可以在单个任务上连续工作长达 6 小时，通常在人类睡眠时执行。这种能力使得复杂的、多步骤的工程任务可以在无人监督的情况下完成。结合 Application Legibility（代理可以查询日志、操作 UI、验证性能指标），长时间运行的任务能够完成从分析问题到验证修复的完整闭环。这从根本上改变了软件开发的节奏——开发不再局限于工作时间。",
     examples: [
       {
-        word: "分维度数据集",
-        meaning: "按评估维度组织的测试数据",
-        breakdown: { root: "Evaluation Dataset" },
-        explanation: "将测试用例按功能维度（准确性、安全性、格式合规性等）分组管理，便于针对性地评估和改进特定维度的性能。"
+        word: "过夜任务",
+        meaning: "在工程师休息时代理持续工作",
+        breakdown: { root: "Long-Running Tasks" },
+        explanation: "工程师下班前提交任务描述，Codex 在夜间持续工作 6 小时，第二天早上工程师审查完成的工作。"
       },
       {
-        word: "生产日志采集",
-        meaning: "从真实用户交互中提取评估数据",
-        breakdown: { root: "Evaluation Dataset" },
-        explanation: "从生产环境的用户查询日志中提取有代表性的案例，确保评估数据反映真实使用场景，而非仅靠人工假设。"
+        word: "多步骤闭环",
+        meaning: "在一次长运行中完成分析→修复→验证的完整流程",
+        breakdown: { root: "Long-Running Tasks" },
+        explanation: "代理不是只写代码，而是在一次长运行中完成问题分析、修复实现、测试编写和验证的完整流程。"
       },
       {
-        word: "增量更新",
-        meaning: "持续补充和更新评估数据集",
-        breakdown: { root: "Evaluation Dataset" },
-        explanation: "评估数据集不是一次性创建的，应该随着产品迭代和用户反馈持续补充新的测试用例，保持评估的时效性。"
+        word: "无人监督执行",
+        meaning: "代理自主处理执行过程中的障碍",
+        breakdown: { root: "Long-Running Tasks" },
+        explanation: "长运行中遇到的构建错误、测试失败等问题由代理自行诊断和修复，仅在需要人类判断时暂停。"
       }
     ],
     quiz: {
-      question: "创建评估数据集时最重要的原则是什么？",
-      options: ["数据量越大越好", "只用合成数据", "覆盖正常场景、边缘情况和对抗性输入", "只关注准确性"],
+      question: "Codex 在单个任务上最长可以连续工作多久？",
+      options: ["1小时", "3小时", "6小时", "24小时"],
       correctAnswer: 2
     }
   },
   {
     id: 17,
-    root: "Model Comparison",
-    origin: "评估方法",
-    meaning: "在相同评估标准下对比不同模型的性能表现",
-    description: "Model Comparison 是评估工程的核心应用场景之一。当新模型版本发布（如从 GPT-4 到 GPT-4o）或考虑切换模型供应商时，需要在完全相同的评估条件下对比它们的性能。OpenAI 的 Evals API 支持在同一评估定义下使用不同模型运行，返回标准化的结果指标供对比。关键注意点包括：使用相同的测试数据集、控制随机性（temperature设置）、对比多个维度而非单一指标、考虑成本和延迟等非功能性指标。",
+    root: "Mechanical Enforcement",
+    origin: "架构强制",
+    meaning: "通过自定义 linter、CI 和结构测试机械地强制执行架构规则",
+    description: "Mechanical Enforcement（机械强制）是 Harness Engineering 中保持代码库连贯性的关键实践。与依赖人工代码审查不同，团队将所有架构规则、命名约定和质量标准编码为可自动化执行的 linter 规则、CI 作业和结构测试。这些规则涵盖：分层架构的依赖方向、Schema 和类型的命名约定、文件大小限制、结构化日志格式以及平台特定的可靠性要求。不仅验证代码，还验证知识库的时效性、交叉链接和结构正确性。",
     examples: [
       {
-        word: "横向对比",
-        meaning: "在同一数据集上对比不同模型的表现",
-        breakdown: { root: "Model Comparison" },
-        explanation: "使用完全相同的评估数据集和评分标准，分别运行不同模型，对比各项指标，确保比较的公平性。"
+        word: "自定义 Linter",
+        meaning: "编写项目特定的 lint 规则",
+        breakdown: { root: "Mechanical Enforcement" },
+        explanation: "针对项目的分层架构、命名约定等编写自定义 lint 规则，在代码提交时自动检查，违规代码无法通过 CI。"
       },
       {
-        word: "版本迭代对比",
-        meaning: "对比同一模型不同版本的性能变化",
-        breakdown: { root: "Model Comparison" },
-        explanation: "模型更新后，对比新旧版本在所有关键指标上的表现，确保升级带来整体提升而非某些维度的退步。"
+        word: "结构测试",
+        meaning: "测试代码的组织结构是否符合架构规则",
+        breakdown: { root: "Mechanical Enforcement" },
+        explanation: "不仅测试功能正确性，还测试代码文件的组织方式、依赖关系和模块边界是否符合预定义的架构模式。"
       },
       {
-        word: "成本效益分析",
-        meaning: "综合考虑性能和成本的对比评估",
-        breakdown: { root: "Model Comparison" },
-        explanation: "不仅比较输出质量，还考虑 Token 消耗、响应延迟和 API 费用，找到性能与成本的最优平衡点。"
+        word: "文档验证 CI",
+        meaning: "CI 自动检查文档的时效性和链接有效性",
+        breakdown: { root: "Mechanical Enforcement" },
+        explanation: "专用的 CI 作业验证 docs/ 中的文档是否过时、交叉链接是否有效、结构是否正确，防止文档腐烂。"
       }
     ],
     quiz: {
-      question: "进行模型对比时，以下哪项不是必要条件？",
-      options: ["使用相同的测试数据集", "控制随机性参数", "使用相同的硬件环境", "对比多个维度"],
-      correctAnswer: 2
-    }
-  },
-  {
-    id: 18,
-    root: "Caching & Error Handling",
-    origin: "工程实践",
-    meaning: "评估过程中的结果缓存和错误恢复机制",
-    description: "在大规模评估中，Caching（缓存）和 Error Handling（错误处理）是保证评估流程鲁棒性的关键。当数千个测试用例中某一个失败时，不应该重新运行整个评估——需要设计自动缓存机制，存储成功运行的测试用例结果，仅重试失败的任务。同时，try-catch 错误处理确保单个用例的失败不会导致整个评估流程崩溃。这些工程实践看似简单，却是评估系统从实验原型走向生产可用的关键。",
-    examples: [
-      {
-        word: "增量重试",
-        meaning: "只重新运行失败的测试用例",
-        breakdown: { root: "Caching & Error Handling" },
-        explanation: "通过缓存已成功的评估结果，当评估因API错误或超时而部分失败时，只需重试失败的用例，而非从头开始。"
-      },
-      {
-        word: "优雅降级",
-        meaning: "单个用例失败不影响整体评估",
-        breakdown: { root: "Caching & Error Handling" },
-        explanation: "使用 try-catch 包裹每个测试用例的执行，记录失败原因，继续执行后续用例，最后汇总报告中标注失败项。"
-      },
-      {
-        word: "结果持久化",
-        meaning: "将评估结果安全地存储到磁盘",
-        breakdown: { root: "Caching & Error Handling" },
-        explanation: "在评估过程中定期将中间结果写入磁盘，防止进程异常终止导致所有结果丢失，支持从中断点恢复。"
-      }
-    ],
-    quiz: {
-      question: "缓存机制在评估中的最大价值是什么？",
-      options: ["提升评分准确性", "减少 API 费用", "避免失败后从头重跑", "加快模型推理速度"],
-      correctAnswer: 2
-    }
-  },
-  {
-    id: 19,
-    root: "Hyperparameter Logging",
-    origin: "工程实践",
-    meaning: "记录和追踪评估过程中使用的超参数配置",
-    description: "Hyperparameter Logging 是构建可复现评估流程的关键实践。每次评估运行都应该记录所有相关的超参数配置：使用的模型版本、temperature、max_tokens、提示词模板、评估数据集版本等。通过将评估结果与特定的超参数组合关联起来，开发者可以系统化地确定 LLM 系统的最佳配置。工具如 Weights & Biases（W&B）可以与 Evals 框架集成，提供超参数追踪、实验管理和结果可视化功能。",
-    examples: [
-      {
-        word: "实验追踪",
-        meaning: "记录每次评估运行的完整配置",
-        breakdown: { root: "Hyperparameter Logging" },
-        explanation: "包括模型名称、版本、temperature、max_tokens、system prompt、评估数据集版本等，确保每次实验都可复现。"
-      },
-      {
-        word: "W&B 集成",
-        meaning: "使用 Weights & Biases 管理评估实验",
-        breakdown: { root: "Hyperparameter Logging" },
-        explanation: "OpenAI Evals 原生支持 W&B 集成，自动记录评估配置和结果，提供丰富的可视化和对比功能。"
-      },
-      {
-        word: "配置对比",
-        meaning: "比较不同超参数组合的评估效果",
-        breakdown: { root: "Hyperparameter Logging" },
-        explanation: "通过系统化地对比不同 temperature、prompt template 等配置的评估结果，找到最优的超参数组合。"
-      }
-    ],
-    quiz: {
-      question: "OpenAI Evals 框架原生支持与哪个实验追踪工具的集成？",
-      options: ["MLflow", "Weights & Biases", "Neptune.ai", "Comet ML"],
+      question: "Mechanical Enforcement 的核心优势是什么？",
+      options: ["减少代码量", "不依赖人工审查即可保证一致性", "提高代码运行速度", "降低开发成本"],
       correctAnswer: 1
     }
   },
   {
-    id: 20,
-    root: "Preparedness Framework",
-    origin: "安全测试",
-    meaning: "OpenAI 的 AI 风险准备和评估框架",
-    description: "Preparedness Framework 是 OpenAI 专门用于评估和管理前沿 AI 模型风险的框架体系。它关注四大风险类别：网络安全、生物威胁、说服力和自主行为（模型自主获取资源和规避人类控制的能力）。每个风险类别有从'低'到'关键'的分级评估，OpenAI 承诺不部署风险达到'关键'级别的模型。PaperBench 等基准测试就是在这个框架下开发的。Preparedness 团队持续开发新的评估方法，确保模型发布前经过充分的安全验证。",
+    id: 18,
+    root: "Agent Review Pipeline",
+    origin: "反馈循环",
+    meaning: "代理审查代理代码的自动化审查流水线",
+    description: "Agent Review Pipeline 是 Ralph Wiggum Loop 的工程化实现，将代码审查从人类驱动转变为代理驱动。流程包括：本地代理审查（快速检查语法、风格和明显错误）、云端代理审查（更深入的逻辑和架构审查）、以及基于反馈的自动迭代。代理不仅能识别问题，还能根据审查意见自动修改代码并重新提交。这种「代理对代理」的审查模式大幅减少了人类的审查负担，使得每天处理 3.5 个 PR/人成为可能。",
     examples: [
       {
-        word: "风险分级评估",
-        meaning: "从'低'到'关键'的四级风险评估体系",
-        breakdown: { root: "Preparedness Framework" },
-        explanation: "每个风险维度（网络安全、生物威胁等）都有独立的分级评估，模型必须在所有维度都低于'关键'级才能部署。"
+        word: "本地代理审查",
+        meaning: "快速的本地代码质量检查",
+        breakdown: { root: "Agent Review Pipeline" },
+        explanation: "在代码提交前，本地代理快速检查代码风格、lint 规则合规性和明显的逻辑错误，类似于本地 pre-commit hook。"
       },
       {
-        word: "自主行为评估",
-        meaning: "测试模型是否会自主获取资源或规避控制",
-        breakdown: { root: "Preparedness Framework" },
-        explanation: "评估 AI 模型是否表现出自主寻求更多计算资源、复制自身、或规避人类监督等潜在危险行为。"
+        word: "云端深度审查",
+        meaning: "在云端进行更深入的逻辑和架构审查",
+        breakdown: { root: "Agent Review Pipeline" },
+        explanation: "提交 PR 后，云端代理进行更全面的审查，包括架构合规性、安全风险、性能影响等深层分析。"
       },
       {
-        word: "说服力评估",
-        meaning: "测试模型的说服和操纵能力",
-        breakdown: { root: "Preparedness Framework" },
-        explanation: "评估模型是否能有效地说服人类做出违背其利益的决定，防止 AI 被用于大规模社会操纵。"
+        word: "自动迭代修复",
+        meaning: "代理根据审查反馈自动修改并重新提交",
+        breakdown: { root: "Agent Review Pipeline" },
+        explanation: "收到审查意见后，生成代码的代理自动理解问题、修改代码并推送新提交，无需人类中转。"
       }
     ],
     quiz: {
-      question: "OpenAI Preparedness Framework 不包含以下哪个风险类别？",
-      options: ["网络安全", "生物威胁", "经济危机", "自主行为"],
+      question: "Agent Review Pipeline 的最终效果是什么？",
+      options: ["完全取消代码审查", "将审查从人类驱动转为代理驱动", "减少代码量", "提高编译速度"],
+      correctAnswer: 1
+    }
+  },
+  {
+    id: 19,
+    root: "CDP Integration",
+    origin: "可读性工程",
+    meaning: "将 Chrome DevTools Protocol 集成到代理运行时，让代理能够操作浏览器",
+    description: "CDP Integration（Chrome DevTools Protocol 集成）是让代理理解和操作 Web UI 的关键技术。OpenAI 团队将 Chrome DevTools Protocol 接入 Codex 的代理运行时，创建了处理 DOM 快照、截图和导航的技能（skills）。通过这种集成，Codex 可以像人类 QA 工程师一样操作浏览器——复现 Bug、点击按钮、填写表单、检查页面元素、截取页面截图并分析 UI 行为。这彻底打破了代理只能操作代码而无法理解 UI 的局限。",
+    examples: [
+      {
+        word: "DOM 快照",
+        meaning: "获取页面 DOM 树的结构化快照",
+        breakdown: { root: "CDP Integration" },
+        explanation: "代理通过 CDP 获取页面的完整 DOM 树快照，分析页面结构和元素属性，用于验证 UI 是否正确渲染。"
+      },
+      {
+        word: "截图分析",
+        meaning: "代理截取页面截图并进行视觉分析",
+        breakdown: { root: "CDP Integration" },
+        explanation: "代理可以截取页面的屏幕截图，结合视觉理解能力分析 UI 布局、颜色和交互状态是否符合设计规范。"
+      },
+      {
+        word: "导航与交互",
+        meaning: "代理通过 CDP 驱动浏览器进行页面导航和交互",
+        breakdown: { root: "CDP Integration" },
+        explanation: "代理可以点击按钮、填写表单、滚动页面等，模拟真实用户的操作流程来验证功能正确性。"
+      }
+    ],
+    quiz: {
+      question: "CDP Integration 使代理获得了什么新能力？",
+      options: ["代码编译", "数据库查询", "操作浏览器 UI", "训练模型"],
       correctAnswer: 2
     }
   },
   {
-    id: 21,
-    root: "Eval Template System",
-    origin: "核心框架",
-    meaning: "使用模板语法动态构建评估提示词",
-    description: "Eval Template System 是 Evals 框架中用于动态构建评估提示词的模板机制。使用 {{ item.field_name }} 语法将测试数据中的字段动态注入到提示词中，确保评估覆盖多样化的输入场景。模板系统支持在 input_messages 中定义系统消息和用户消息的模板，可以引用数据源中的任意字段。这种设计让评估配置与数据分离，同一个评估模板可以配合不同的数据集运行，大幅提升了评估的灵活性和可复用性。",
+    id: 20,
+    root: "Golden Rules",
+    origin: "代码维护",
+    meaning: "编码到仓库中的最佳实践原则，引导代理生成高质量代码",
+    description: "Golden Rules（黄金原则）是直接编码到仓库中的代码质量和设计原则。这些原则以代理可读的格式存储，在代理生成代码时提供指导。例如：偏好共享实用程序包而非重复实现、验证边界（validate boundaries）而不是 YOLO-style 探测数据。黄金原则的独特之处在于它们不是建议，而是被后台代理持续验证和强制执行的硬性要求。偏离黄金原则的代码会被后台扫描代理发现并自动修复。",
     examples: [
       {
-        word: "变量插值",
-        meaning: "使用 {{ }} 语法注入测试数据",
-        breakdown: { root: "Eval Template System" },
-        explanation: "在提示词模板中使用 {{ item.ticket_text }} 等语法，运行时自动替换为实际的测试数据值。"
+        word: "共享实用程序偏好",
+        meaning: "优先使用共享的工具包而非重复实现",
+        breakdown: { root: "Golden Rules" },
+        explanation: "当需要通用功能时，代理应该使用已有的共享实用程序包，而非在每个模块中重复实现相同的逻辑。"
       },
       {
-        word: "消息模板",
-        meaning: "定义系统消息和用户消息的模板",
-        breakdown: { root: "Eval Template System" },
-        explanation: "input_messages 中可以同时定义 system 角色的指令模板和 user 角色的输入模板，实现完整的对话评估。"
+        word: "边界验证",
+        meaning: "在数据入口处严格验证，而非到处做防御性检查",
+        breakdown: { root: "Golden Rules" },
+        explanation: "validate boundaries 而不是 YOLO-style 探测数据——在边界处验证输入，内部代码可以信任数据的正确性。"
       },
       {
-        word: "模板复用",
-        meaning: "同一模板配合不同数据集运行",
-        breakdown: { root: "Eval Template System" },
-        explanation: "评估模板与数据分离，同一个分类评估模板可以配合不同领域的数据集（IT工单、客服对话等）运行。"
+        word: "持续自动验证",
+        meaning: "后台代理持续检查代码是否遵守黄金原则",
+        breakdown: { root: "Golden Rules" },
+        explanation: "不依赖人类发现违规，后台代理定期扫描代码库，发现偏离原则的代码后自动打开修复 PR。"
       }
     ],
     quiz: {
-      question: "Evals 模板系统使用什么语法进行变量插值？",
-      options: ["${variable}", "{{ variable }}", "{variable}", "%variable%"],
+      question: "Golden Rules 与普通编码建议的区别是什么？",
+      options: ["没有区别", "Golden Rules 被后台代理持续验证和强制执行", "Golden Rules 只是文档", "Golden Rules 只适用于人类"],
+      correctAnswer: 1
+    }
+  },
+  {
+    id: 21,
+    root: "Git Worktree",
+    origin: "执行模式",
+    meaning: "利用 Git Worktree 让代理为每次更改启动独立的应用实例",
+    description: "Git Worktree 是 Harness Engineering 中实现代理并行工作的关键技术。通过 git worktree，每个代理任务可以在独立的工作目录中运行，互不干扰。这使得多个代理可以同时处理不同的 Bug 修复或功能开发，每个代理都有自己独立的应用实例可以测试。结合 Application Legibility，代理可以在自己的 worktree 中启动应用、运行测试、验证修复，完全不影响其他正在进行的开发工作。",
+    examples: [
+      {
+        word: "独立工作目录",
+        meaning: "每个代理任务运行在独立的 git worktree 中",
+        breakdown: { root: "Git Worktree" },
+        explanation: "git worktree 允许从同一个仓库创建多个工作目录，每个代理在自己的目录中操作，互不干扰。"
+      },
+      {
+        word: "并行开发",
+        meaning: "多个代理同时处理不同的任务",
+        breakdown: { root: "Git Worktree" },
+        explanation: "一个代理修复前端 Bug，另一个实现后端功能，各自在独立的 worktree 中工作，可以同时启动各自的应用实例。"
+      },
+      {
+        word: "隔离验证",
+        meaning: "每个代理在独立环境中验证自己的更改",
+        breakdown: { root: "Git Worktree" },
+        explanation: "代理可以在自己的 worktree 中启动应用实例、运行测试，确保更改的正确性，不受其他开发分支影响。"
+      }
+    ],
+    quiz: {
+      question: "Git Worktree 在 Harness Engineering 中的主要作用是什么？",
+      options: ["版本管理", "让多个代理并行工作且互不干扰", "代码备份", "分支管理"],
       correctAnswer: 1
     }
   },
   {
     id: 22,
-    root: "Result Analytics",
-    origin: "工程实践",
-    meaning: "评估结果的分析、可视化和报告机制",
-    description: "Result Analytics 是评估工程的最后一环，将原始的评估数据转化为可操作的洞察。OpenAI Evals API 返回的结果数据包括 result_counts（通过/失败总数）、per_testing_criteria_results（各评估标准的具体通过情况）和 per_model_usage（Token使用情况）。每次评估运行还生成一个 report_url，链接到 OpenAI Dashboard 的可视化报告。好的分析不仅关注整体通过率，还需要深入分析失败案例的模式，找到系统性的薄弱环节。",
+    root: "Quality Grading",
+    origin: "代码维护",
+    meaning: "后台代理持续评估和更新代码库的质量等级",
+    description: "Quality Grading（质量等级）是 Entropy & Garbage Collection 体系中的评估机制。后台 Codex 任务不仅扫描代码偏差，还会更新代码库各部分的质量等级。这种机制让团队能够量化代码健康度，识别需要优先重构的区域。质量等级可能涵盖多个维度：架构合规性、测试覆盖率、文档完整性、性能指标合规性等。通过将质量等级可视化，团队可以在宏观层面监控代码库的健康趋势。",
     examples: [
       {
-        word: "失败模式分析",
-        meaning: "识别评估失败案例中的共同模式",
-        breakdown: { root: "Result Analytics" },
-        explanation: "对所有失败的测试用例进行聚类分析，找出系统性的失败模式（如特定类型的问题总是回答错误），指导针对性优化。"
+        word: "自动质量评估",
+        meaning: "后台代理自动评估代码质量并打分",
+        breakdown: { root: "Quality Grading" },
+        explanation: "后台任务定期扫描代码库，从多个维度评估代码质量，生成量化的质量等级报告。"
       },
       {
-        word: "Token 成本监控",
-        meaning: "追踪评估过程中的 Token 消耗",
-        breakdown: { root: "Result Analytics" },
-        explanation: "per_model_usage 数据帮助了解不同提示词和模型的 Token 消耗，在优化性能的同时控制评估成本。"
+        word: "针对性重构",
+        meaning: "基于质量等级数据优先重构最需要改进的区域",
+        breakdown: { root: "Quality Grading" },
+        explanation: "质量等级最低的模块优先被安排重构任务，确保有限的重构资源用在刀刃上。"
       },
       {
-        word: "趋势追踪",
-        meaning: "监控评估指标随时间的变化趋势",
-        breakdown: { root: "Result Analytics" },
-        explanation: "对比多次评估运行的结果，追踪各项指标的变化趋势，及时发现性能退化或改进的效果。"
+        word: "健康趋势监控",
+        meaning: "追踪代码库质量等级随时间的变化趋势",
+        breakdown: { root: "Quality Grading" },
+        explanation: "对比多次扫描的质量等级数据，监控代码库健康度是在提升还是退化，及时发现恶化趋势。"
       }
     ],
     quiz: {
-      question: "OpenAI Evals API 的结果中不包含以下哪项？",
-      options: ["result_counts", "per_testing_criteria_results", "per_model_usage", "training_loss"],
-      correctAnswer: 3
+      question: "Quality Grading 机制的直接目的是什么？",
+      options: ["加快编码速度", "量化代码健康度并识别重构优先级", "减少代理数量", "替代人工测试"],
+      correctAnswer: 1
     }
   },
   {
     id: 23,
-    root: "Cross-Lab Testing",
-    origin: "安全测试",
-    meaning: "不同 AI 实验室互相测试对方模型的安全协作机制",
-    description: "Cross-Lab Testing（跨实验室测试）是 AI 安全评估领域的重要创新实践。2025年8月，OpenAI 与 Anthropic 首次进行了联合安全测试，每家公司使用自己的内部安全协议测试对方的模型。OpenAI 测试了 Anthropic 的 Claude Opus 4 和 Claude Sonnet 4，Anthropic 则测试了 OpenAI 的 GPT 系列模型。这种协作旨在发现各自内部评估中的盲点。OpenAI 联合创始人 Wojciech Zaremba 认为，这种跨实验室协作在 AI 竞争激烈的时代越来越重要。",
+    root: "Incremental Debt Repayment",
+    origin: "代码维护",
+    meaning: "以小增量持续偿还技术债务，而非累积后爆发式解决",
+    description: "Incremental Debt Repayment（增量债务偿还）是 Harness Engineering 中处理技术债务的核心策略。传统方式是让技术债务累积到不可忍受时集中解决，这会导致痛苦的大规模重构。而在 Agent-First 模式下，后台 Codex 任务持续扫描代码偏差并打开针对性的小型重构 PR，大多数可以在一分钟内审查并自动合并。这种方式将技术债务的偿还转变为一个持续的、低成本的日常活动，类似于编程语言中的增量式垃圾回收。",
     examples: [
       {
-        word: "互评机制",
-        meaning: "A 公司测试 B 公司的模型，反之亦然",
-        breakdown: { root: "Cross-Lab Testing" },
-        explanation: "每家公司使用自己独特的安全测试方法论测试对方的模型，这样可以发现单一视角可能遗漏的安全问题。"
+        word: "小型重构 PR",
+        meaning: "每次只修复一个小的技术债务点",
+        breakdown: { root: "Incremental Debt Repayment" },
+        explanation: "后台代理打开的重构 PR 范围很小（如统一一个命名约定、提取一个共享函数），大多一分钟内可审查合并。"
       },
       {
-        word: "盲点发现",
-        meaning: "通过外部视角发现内部评估的盲区",
-        breakdown: { root: "Cross-Lab Testing" },
-        explanation: "每个团队都可能在长期评估自家模型时形成惯性思维，外部团队的不同测试思路能有效发现被忽略的安全风险。"
+        word: "持续偿还",
+        meaning: "技术债务的偿还作为日常持续活动",
+        breakdown: { root: "Incremental Debt Repayment" },
+        explanation: "不等到积累成问题才集中处理，而是每天都有后台代理在做小的代码优化和重构。"
       },
       {
-        word: "安全标准对齐",
-        meaning: "推动行业建立统一的安全评估标准",
-        breakdown: { root: "Cross-Lab Testing" },
-        explanation: "通过跨实验室的协作测试，不同公司可以对齐安全评估的方法论和标准，推动整个行业的安全水平提升。"
+        word: "增量式 GC",
+        meaning: "类比编程语言中增量垃圾回收的思想",
+        breakdown: { root: "Incremental Debt Repayment" },
+        explanation: "就像增量式 GC 将垃圾回收分散到程序运行的各个时刻，增量债务偿还将重构分散到每天的开发流程中。"
       }
     ],
     quiz: {
-      question: "OpenAI 与 Anthropic 的联合安全测试发生在什么时间？",
-      options: ["2024年3月", "2024年12月", "2025年5月", "2025年8月"],
-      correctAnswer: 3
+      question: "Incremental Debt Repayment 相比传统方式的核心优势是什么？",
+      options: ["消除所有技术债务", "避免痛苦的大规模重构", "减少代码量", "提高运行速度"],
+      correctAnswer: 1
     }
   },
   {
     id: 24,
-    root: "Eval-Driven Development",
-    origin: "方法论",
-    meaning: "以评估为驱动的 LLM 应用开发方法论",
-    description: "Eval-Driven Development（评估驱动开发）是 OpenAI 推荐的 LLM 应用开发方法论，类似于传统软件工程中的 TDD（测试驱动开发）。核心流程是：先定义评估标准和测试数据，再迭代优化提示词和系统设计。每次修改后都运行评估验证效果，形成「定义 → 测试 → 分析 → 改进」的闭环。这种方法论确保了 LLM 应用的质量可量化、改进可追踪，避免了「凭感觉调 prompt」的低效做法。",
+    root: "Role Transformation",
+    origin: "核心理念",
+    meaning: "工程师角色从编写代码转变为设计环境和搭建脚手架",
+    description: "Role Transformation（角色转型）描述了 Harness Engineering 时代工程师角色的根本性变化。在无手写代码的环境下，工程师的工作重心从编码转向系统搭建——使代理能够完成有用的工作。核心工作包括：提供工具和抽象概念、设计反馈循环和控制系统、定义架构边界和不变量、构建可观测性基础设施、管理仓库知识。工程师成为了代理的「教练」和「架构师」，而非「执行者」。",
     examples: [
       {
-        word: "先写评估再写 Prompt",
-        meaning: "在设计提示词之前先定义评估标准",
-        breakdown: { root: "Eval-Driven Development" },
-        explanation: "类似于 TDD 中先写测试再写代码，先明确什么样的输出是好的，再设计提示词来达成目标。"
+        word: "环境设计师",
+        meaning: "设计代理高效工作的环境和工具",
+        breakdown: { root: "Role Transformation" },
+        explanation: "工程师的核心产出不再是代码，而是让代理能够高效工作的环境——工具链、文档体系、架构规则和反馈机制。"
       },
       {
-        word: "迭代优化循环",
-        meaning: "定义→测试→分析→改进的闭环流程",
-        breakdown: { root: "Eval-Driven Development" },
-        explanation: "每次修改提示词后立即运行评估，对比指标变化，基于数据做决策而非主观判断，形成科学的优化循环。"
+        word: "意图指定者",
+        meaning: "通过提示词精确描述产品意图",
+        breakdown: { root: "Role Transformation" },
+        explanation: "工程师需要培养精确描述意图的能力——用提示词清晰传达想要什么，而非自己写代码实现。"
       },
       {
-        word: "质量量化",
-        meaning: "用数字衡量 LLM 应用的输出质量",
-        breakdown: { root: "Eval-Driven Development" },
-        explanation: "避免「这个输出看起来还不错」的主观判断，用明确的评估指标（准确率、相关性、安全性得分）量化质量。"
+        word: "反馈循环建设者",
+        meaning: "构建让代理自我改进的反馈系统",
+        breakdown: { root: "Role Transformation" },
+        explanation: "设计审查流程、CI/CD 管线、质量监控等反馈机制，让代理在循环中不断提升输出质量。"
       }
     ],
     quiz: {
-      question: "Eval-Driven Development 最类似于传统软件工程中的什么方法？",
-      options: ["敏捷开发", "瀑布模型", "TDD（测试驱动开发）", "极限编程"],
-      correctAnswer: 2
+      question: "在 Harness Engineering 中，工程师最重要的新技能是什么？",
+      options: ["编写更快的代码", "设计代理高效工作的环境", "学习更多编程语言", "手动测试"],
+      correctAnswer: 1
     }
   },
   {
     id: 25,
-    root: "Git-LFS for Eval Data",
-    origin: "数据工程",
-    meaning: "使用 Git Large File Storage 管理大规模评估数据",
-    description: "Git-LFS（Git Large File Storage）是 OpenAI Evals 框架中管理评估数据的关键基础设施。评估数据集通常体量巨大，直接存储在 Git 仓库中会导致仓库膨胀和克隆缓慢。Evals 框架使用 Git-LFS 将大型数据文件存储在专门的服务器上，Git 仓库中只保留指针文件。开发者克隆仓库后需要运行 git lfs pull 来获取实际的评估数据。这种方式保持了代码和数据的版本同步，同时避免了仓库体积过大的问题。",
+    root: "Open Frontiers",
+    origin: "未来探索",
+    meaning: "Harness Engineering 中尚待解决的开放性问题",
+    description: "Open Frontiers 代表了 Harness Engineering 中团队仍在探索的未解问题。三大核心挑战：1）长期架构一致性——尚不知道在完全代理生成的系统中，架构一致性如何在几年内演变；2）人类判断力的杠杆——仍在学习人类判断力在哪里能增加最大杠杆，以及如何编码这种判断力使其产生复利；3）模型演进——不知道随着模型变得更强，整个系统将如何演进。这些问题的答案将塑造 Agent-First 软件工程的未来。",
     examples: [
       {
-        word: "数据版本管理",
-        meaning: "将评估数据纳入版本控制",
-        breakdown: { root: "Git-LFS for Eval Data" },
-        explanation: "评估数据的变更（新增测试用例、修正标签错误等）与代码变更一起记录在 Git 历史中，确保可追溯性。"
+        word: "长期架构一致性",
+        meaning: "代理生成的代码库能否在数年内保持架构连贯",
+        breakdown: { root: "Open Frontiers" },
+        explanation: "目前的实验只有 5 个月，尚不清楚完全由代理生成的代码库在更长时间跨度中是否能保持架构一致性。"
       },
       {
-        word: "指针文件",
-        meaning: "Git 仓库中只存储指向实际数据的引用",
-        breakdown: { root: "Git-LFS for Eval Data" },
-        explanation: "Git-LFS 将大文件替换为小型指针文件，保持仓库轻量化，实际数据存储在 LFS 服务器上按需拉取。"
+        word: "人类判断力杠杆",
+        meaning: "如何将人类判断力编码为可复利的系统",
+        breakdown: { root: "Open Frontiers" },
+        explanation: "人类在哪些决策点上的介入价值最大？如何将这些判断力固化为代理可遵循的规则和原则？"
       },
       {
-        word: "按需下载",
-        meaning: "只下载当前需要的评估数据",
-        breakdown: { root: "Git-LFS for Eval Data" },
-        explanation: "克隆仓库时默认不下载 LFS 数据，开发者可以选择性地拉取需要的数据集，节省带宽和存储空间。"
+        word: "模型能力演进",
+        meaning: "随着模型变强，整个工程系统如何适应",
+        breakdown: { root: "Open Frontiers" },
+        explanation: "更强的模型可能需要更少的脚手架或不同的脚手架，整个 Harness Engineering 方法论需要随模型进化而调整。"
       }
     ],
     quiz: {
-      question: "使用 Git-LFS 管理评估数据的主要好处是什么？",
-      options: ["提升数据质量", "加密敏感数据", "避免仓库体积过大", "自动生成测试报告"],
-      correctAnswer: 2
+      question: "以下哪项不是 OpenAI 提到的 Open Frontiers？",
+      options: ["长期架构一致性", "人类判断力的杠杆", "模型能力演进", "代理替代人类工程师"],
+      correctAnswer: 3
     }
   }
 ];

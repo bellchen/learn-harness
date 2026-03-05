@@ -1,0 +1,57 @@
+{
+  "name": "Harness Engineering 工坊",
+  "short_name": "HE工坊",
+  "description": "系统学习 Agent-First 世界中的 Harness Engineering 方法论，25个核心概念掌握 AI 代理工程",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FBBF24",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-CN",
+  "categories": ["education", "productivity", "reference"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "开始学习",
+      "short_name": "学习",
+      "description": "进入渐进式学习模式",
+      "url": "/learn.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "闪卡复习",
+      "short_name": "闪卡",
+      "description": "使用闪卡快速复习",
+      "url": "/flashcard.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "概念索引",
+      "short_name": "索引",
+      "description": "浏览所有概念",
+      "url": "/roots.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "学习进度",
+      "short_name": "进度",
+      "description": "查看学习统计",
+      "url": "/progress.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>闪卡复习 - OpenAI Harness Engineering 工坊</title>
-  <meta name="description" content="使用闪卡快速复习 OpenAI Harness Engineering 的核心概念。">
+  <title>闪卡复习 - Harness Engineering 工坊</title>
+  <meta name="description" content="通过闪卡模式快速复习 Harness Engineering 核心概念，支持键盘操作，高效记忆。">
+  <meta name="keywords" content="Harness Engineering,闪卡,复习,记忆,Agent-First">
+  <meta name="author" content="Harness Engineering 工坊">
+  <meta name="language" content="zh-CN">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="canonical" href="https://learn-harness.vercel.app/flashcard.html">
+  <meta property="og:title" content="闪卡复习 - Harness Engineering 工坊">
+  <meta property="og:description" content="通过闪卡模式快速复习 Harness Engineering 核心概念">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learn-harness.vercel.app/flashcard.html">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FBBF24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,39 +42,53 @@
   <main>
     <div class="page-header">
       <h1>闪卡复习</h1>
-      <p>点击卡片翻转，使用键盘 ← → 切换</p>
+      <p>快速复习 Harness Engineering 核心概念</p>
     </div>
 
     <div class="container">
+      <div class="text-center" id="progressText" style="color:var(--color-text-secondary);margin-bottom:16px;">概念 1 / 25</div>
+
       <div class="flashcard-container">
         <div class="flashcard" id="flashcard" onclick="flipCard()">
           <div class="flashcard-front">
-            <div class="flashcard-root" id="frontRoot">-</div>
-            <div class="flashcard-meaning" id="frontMeaning">-</div>
             <div class="flashcard-origin" id="frontOrigin">-</div>
+            <div class="flashcard-root" id="frontRoot">-</div>
+            <div class="flashcard-meaning" id="frontMeaning">点击翻转查看详细说明</div>
           </div>
           <div class="flashcard-back">
-            <div class="flashcard-root" id="backRoot">-</div>
+            <div class="flashcard-root" id="backRoot" style="font-size:1.25rem;margin-bottom:12px;">-</div>
             <div class="flashcard-description" id="backDescription">-</div>
           </div>
         </div>
       </div>
 
       <div class="flashcard-controls">
-        <button class="btn btn-secondary" onclick="prevCard()">← 上一个</button>
-        <button class="btn btn-success" id="masterBtn" onclick="toggleMaster()">标记已掌握</button>
-        <button class="btn btn-secondary" onclick="nextCard()">下一个 →</button>
+        <button class="btn btn-secondary" id="prevBtn" onclick="prevCard()">← 上一张</button>
+        <div style="text-align:center;">
+          <button class="btn btn-ghost" onclick="shuffleCards()" title="随机顺序" style="font-size:0.875rem;">随机</button>
+          <button class="btn btn-ghost" id="masterBtn" onclick="toggleMaster()" title="标记掌握" style="font-size:0.875rem;">☆ 标记掌握</button>
+        </div>
+        <button class="btn btn-secondary" id="nextBtn" onclick="nextCard()">下一张 →</button>
       </div>
 
       <div class="flashcard-progress">
-        <span id="progressText">1 / 25</span>
         <div class="progress-bar-container">
           <div class="progress-bar" id="progressBar"></div>
         </div>
       </div>
 
+      <!-- 筛选 -->
+      <div style="text-align:center;margin-top:24px;">
+        <div class="filter-group">
+          <button class="filter-btn active" onclick="filterCards('all', this)">全部概念</button>
+          <button class="filter-btn" onclick="filterCards('unmastered', this)">未掌握</button>
+          <button class="filter-btn" onclick="filterCards('mastered', this)">已掌握</button>
+          <button class="filter-btn" onclick="filterCards('random', this)">随机5张</button>
+        </div>
+      </div>
+
       <div class="keyboard-hint">
-        <kbd>←</kbd> 上一个 &nbsp; <kbd>空格</kbd> 翻转 &nbsp; <kbd>→</kbd> 下一个
+        <kbd>←</kbd> 上一个 &nbsp; <kbd>空格</kbd> 翻转 &nbsp; <kbd>→</kbd> 下一个 &nbsp; <kbd>M</kbd> 标记掌握
       </div>
     </div>
   </main>
@@ -73,73 +97,95 @@
   <script src="js/storage.js"></script>
   <script>
     (function() {
-      let currentIndex = 0;
-
-      function showFeedback(message, isSuccess) {
-        const toast = document.createElement('div');
-        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(function() { toast.remove(); }, 3000);
-      }
+      var currentCards = WordRoots.slice();
+      var currentIndex = 0;
 
       function loadCard(index) {
-        const safeIndex = ((index % WordRoots.length) + WordRoots.length) % WordRoots.length;
+        if (currentCards.length === 0) {
+          document.getElementById('flashcard').innerHTML = '<div style="text-align:center;padding:40px;"><h3>没有符合条件的概念</h3><p style="color:var(--color-text-secondary)">请选择其他筛选条件</p></div>';
+          return;
+        }
+        var safeIndex = ((index % currentCards.length) + currentCards.length) % currentCards.length;
         currentIndex = safeIndex;
-        const root = WordRoots[safeIndex];
-        const progress = StorageManager.getProgress();
-        const isMastered = progress.masteredRoots.includes(root.id);
+        var root = currentCards[safeIndex];
+        var mastered = isMastered(root.id);
 
-        const card = document.getElementById('flashcard');
+        var card = document.getElementById('flashcard');
         if (card) card.classList.remove('flipped');
 
-        const frontRoot = document.getElementById('frontRoot');
-        const frontMeaning = document.getElementById('frontMeaning');
-        const frontOrigin = document.getElementById('frontOrigin');
-        const backRoot = document.getElementById('backRoot');
-        const backDesc = document.getElementById('backDescription');
-        const masterBtn = document.getElementById('masterBtn');
-        const progressText = document.getElementById('progressText');
-        const progressBar = document.getElementById('progressBar');
+        document.getElementById('frontRoot').textContent = root.root;
+        document.getElementById('frontMeaning').textContent = root.meaning;
+        document.getElementById('frontOrigin').textContent = root.origin;
+        document.getElementById('backRoot').textContent = root.root;
+        document.getElementById('backDescription').textContent = root.description;
 
-        if (frontRoot) frontRoot.textContent = root.root;
-        if (frontMeaning) frontMeaning.textContent = root.meaning;
-        if (frontOrigin) frontOrigin.textContent = root.origin;
-        if (backRoot) backRoot.textContent = root.root;
-        if (backDesc) backDesc.textContent = root.description;
+        var masterBtn = document.getElementById('masterBtn');
         if (masterBtn) {
-          masterBtn.textContent = isMastered ? '取消掌握' : '标记已掌握';
-          masterBtn.className = isMastered ? 'btn btn-secondary' : 'btn btn-success';
+          masterBtn.textContent = mastered ? '★ 已掌握' : '☆ 标记掌握';
+          masterBtn.style.color = mastered ? 'var(--color-accent-dark)' : 'var(--color-text-secondary)';
         }
-        if (progressText) progressText.textContent = (safeIndex + 1) + ' / ' + WordRoots.length;
-        if (progressBar) progressBar.style.width = ((safeIndex + 1) / WordRoots.length * 100) + '%';
+
+        document.getElementById('progressText').textContent = '概念 ' + (safeIndex + 1) + ' / ' + currentCards.length;
+        var bar = document.getElementById('progressBar');
+        if (bar) bar.style.width = ((safeIndex + 1) / currentCards.length * 100) + '%';
+
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+        prevBtn.disabled = currentIndex === 0;
+        prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        nextBtn.disabled = currentIndex === currentCards.length - 1;
+        nextBtn.style.opacity = currentIndex === currentCards.length - 1 ? '0.5' : '1';
       }
 
       window.flipCard = function() {
-        const card = document.getElementById('flashcard');
+        var card = document.getElementById('flashcard');
         if (card) card.classList.toggle('flipped');
       };
 
-      window.nextCard = function() { loadCard(currentIndex + 1); };
-      window.prevCard = function() { loadCard(currentIndex - 1); };
+      window.nextCard = function() { if (currentIndex < currentCards.length - 1) loadCard(currentIndex + 1); };
+      window.prevCard = function() { if (currentIndex > 0) loadCard(currentIndex - 1); };
 
       window.toggleMaster = function() {
-        const root = WordRoots[currentIndex];
-        const progress = StorageManager.getProgress();
-        if (progress.masteredRoots.includes(root.id)) {
-          StorageManager.unmarkRootAsMastered(root.id);
-          showFeedback('已取消掌握标记', false);
-        } else {
-          StorageManager.markRootAsMastered(root.id);
-          showFeedback('✓ 已标记为掌握！', true);
-        }
+        if (currentCards.length === 0) return;
+        var root = currentCards[currentIndex];
+        var mastered = isMastered(root.id);
+        saveMastered(root.id, !mastered);
         loadCard(currentIndex);
       };
 
+      window.shuffleCards = function() {
+        for (var i = currentCards.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = currentCards[i]; currentCards[i] = currentCards[j]; currentCards[j] = tmp;
+        }
+        currentIndex = 0;
+        loadCard(0);
+      };
+
+      window.filterCards = function(type, el) {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        if (el) el.classList.add('active');
+
+        var masteredItems = loadMasteredItems();
+        switch (type) {
+          case 'all': currentCards = WordRoots.slice(); break;
+          case 'mastered': currentCards = WordRoots.filter(function(item) { return masteredItems.includes(item.id); }); break;
+          case 'unmastered': currentCards = WordRoots.filter(function(item) { return !masteredItems.includes(item.id); }); break;
+          case 'random':
+            var shuffled = WordRoots.slice().sort(function() { return Math.random() - 0.5; });
+            currentCards = shuffled.slice(0, 5);
+            break;
+        }
+        currentIndex = 0;
+        loadCard(0);
+      };
+
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') window.prevCard();
-        if (e.key === 'ArrowRight') window.nextCard();
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'ArrowLeft') { e.preventDefault(); window.prevCard(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); window.nextCard(); }
         if (e.key === ' ') { e.preventDefault(); window.flipCard(); }
+        if (e.key === 'm' || e.key === 'M') { e.preventDefault(); window.toggleMaster(); }
       });
 
       loadCard(0);

@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenAI Harness Engineering 工坊</title>
-  <meta name="description" content="基于 OpenAI 官方技术博客与开源实践，系统梳理 AI 评估工程的核心概念。从 Evals 框架到 Red Teaming，从 Prompt Regression 到安全基准，帮助你构建可靠、可测量、可迭代的 LLM 系统。">
-  <meta name="keywords" content="OpenAI,Harness Engineering,Evals,AI评估,LLM测试,概念">
+  <title>Harness Engineering 工坊 - Agent-First 工程方法论</title>
+  <meta name="description" content="基于 OpenAI 技术博客，系统学习 Agent-First 世界中利用 Codex 构建软件的 Harness Engineering 方法论。25个核心概念，从环境设计到代理自主性，掌握人类掌舵、代理执行的新工程范式。">
+  <meta name="keywords" content="Harness Engineering,Agent-First,Codex,OpenAI,AI工程,代理开发,软件工程,学习">
+  <meta name="author" content="Harness Engineering 工坊">
+  <meta name="language" content="zh-CN">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="OpenAI Harness Engineering 工坊">
-  <meta property="og:description" content="基于 OpenAI 官方技术博客与开源实践，系统梳理 AI 评估工程的核心概念。">
+  <link rel="canonical" href="https://learn-harness.vercel.app/">
+  <meta property="og:title" content="Harness Engineering 工坊 - Agent-First 工程方法论">
+  <meta property="og:description" content="25个核心概念，系统掌握 Agent-First 世界中的 Harness Engineering 方法论">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learn-harness.vercel.app/">
   <meta property="og:locale" content="zh_CN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="OpenAI Harness Engineering 工坊">
-  <meta name="twitter:description" content="25个核心概念，系统学习 AI 评估工程。">
+  <meta name="twitter:title" content="Harness Engineering 工坊">
+  <meta name="twitter:description" content="25个核心概念，系统学习 Agent-First 工程方法论">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FBBF24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HE工坊">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -41,15 +49,15 @@
     <section class="hero">
       <div class="hero-content">
         <div class="demo-container" id="demoContainer">
-          <div class="demo-word" id="demoWord">Evals Framework</div>
-          <div class="demo-meaning" id="demoMeaning">OpenAI 开源的 LLM 评估框架</div>
+          <div class="demo-word" id="demoWord">Harness Engineering</div>
+          <div class="demo-meaning" id="demoMeaning">Agent-First 世界中的软件工程方法论</div>
         </div>
         <h1 class="hero-title">
           <span class="accent">25个核心概念</span><br>
-          掌握AI评估工程<br>
-          构建可靠的LLM系统
+          掌握Agent-First工程<br>
+          人类掌舵 代理执行
         </h1>
-        <p class="hero-subtitle">从 Evals 框架到安全测试，系统学习 OpenAI 评估工程的核心方法论与最佳实践</p>
+        <p class="hero-subtitle">基于 OpenAI 工程博客，系统学习在 Agent-First 世界中利用 Codex 构建软件的方法论与最佳实践</p>
         <div class="cta-group">
           <a href="learn.html" class="btn btn-primary btn-large">开始第一个概念 →</a>
           <a href="flashcard.html" class="btn btn-secondary btn-large">闪卡复习</a>
@@ -72,9 +80,17 @@
       </div>
     </section>
 
+    <section class="demo-section">
+      <h2 class="demo-section-title">核心概念预览</h2>
+      <div class="demo-cards" id="demoCards"></div>
+    </section>
+
     <footer class="site-footer">
-      <div class="footer-tagline">像工程师一样评估AI</div>
-      <p class="footer-description">基于 OpenAI 官方技术博客与开源实践，系统梳理 AI 评估工程的核心概念。从 Evals 框架到 Red Teaming，从 Prompt Regression 到安全基准，帮助你构建可靠、可测量、可迭代的 LLM 系统。</p>
+      <div class="footer-tagline">像架构师一样驾驭AI代理</div>
+      <p class="footer-description">基于 OpenAI 2026年2月技术博客《Harness Engineering》，系统梳理 Agent-First 软件开发的核心概念。从环境设计到代理自主性，从代码可读性到技术债务管理，帮助你掌握人类掌舵、代理执行的新工程范式。</p>
+      <div style="margin-top:32px;">
+        <a href="learn.html" class="btn btn-primary">开始学习</a>
+      </div>
     </footer>
   </main>
 
@@ -82,17 +98,17 @@
   <script src="js/siteConfig.js"></script>
   <script>
     (function() {
-      const examples = WordRoots.slice(0, 5).map(function(root) {
+      var examples = WordRoots.slice(0, 5).map(function(root) {
         return { word: root.root, meaning: root.meaning };
       });
 
-      let currentIndex = 0;
-      const demoWord = document.getElementById('demoWord');
-      const demoMeaning = document.getElementById('demoMeaning');
+      var currentIndex = 0;
+      var demoWord = document.getElementById('demoWord');
+      var demoMeaning = document.getElementById('demoMeaning');
 
       function updateDemo() {
         if (!demoWord || !demoMeaning) return;
-        const example = examples[currentIndex];
+        var example = examples[currentIndex];
         demoWord.style.opacity = '0';
         demoMeaning.style.opacity = '0';
         setTimeout(function() {
@@ -105,6 +121,33 @@
       }
 
       setInterval(updateDemo, 4000);
+
+      // 加载 demo 卡片
+      function loadDemoCards() {
+        var container = document.getElementById('demoCards');
+        if (!container) return;
+        var demoItems = WordRoots.slice(0, 5);
+        container.innerHTML = demoItems.map(function(item, i) {
+          return '<div class="demo-card" style="animation-delay:' + (i * 0.1) + 's" onclick="window.location.href=\'root-detail.html?id=' + item.id + '\'">' +
+            '<div class="demo-card-header">' +
+              '<h3 class="demo-card-title">' + item.root + '</h3>' +
+              '<span class="demo-card-category">' + item.origin + '</span>' +
+            '</div>' +
+            '<p class="demo-card-description">' + item.meaning + '</p>' +
+          '</div>';
+        }).join('');
+      }
+
+      loadDemoCards();
+
+      // 注册 Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js').catch(function(err) {
+            console.log('SW registration failed:', err);
+          });
+        });
+      }
     })();
   </script>
 </body>

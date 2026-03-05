@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>学习进度 - OpenAI Harness Engineering 工坊</title>
-  <meta name="description" content="查看你的 OpenAI Harness Engineering 学习进度和成就。">
+  <title>学习进度 - Harness Engineering 工坊</title>
+  <meta name="description" content="查看 Harness Engineering 学习进度，包括掌握情况、测试成绩和学习建议。">
+  <meta name="keywords" content="Harness Engineering,学习进度,统计,成绩,建议">
+  <meta name="author" content="Harness Engineering 工坊">
+  <meta name="language" content="zh-CN">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <link rel="canonical" href="https://learn-harness.vercel.app/progress.html">
+  <meta property="og:title" content="学习进度 - Harness Engineering 工坊">
+  <meta property="og:description" content="查看 Harness Engineering 学习进度和统计">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://learn-harness.vercel.app/progress.html">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FBBF24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,115 +42,218 @@
   <main>
     <div class="page-header">
       <h1>学习进度</h1>
-      <p>追踪你的学习成果</p>
+      <p>追踪你的 Harness Engineering 学习情况</p>
     </div>
 
     <div class="container">
-      <div class="progress-overview">
-        <div class="progress-stat">
-          <div class="stat-value" id="masteredCount">0</div>
-          <div class="stat-label">已掌握</div>
-        </div>
-        <div class="progress-stat">
-          <div class="stat-value" id="totalCount">25</div>
-          <div class="stat-label">总概念</div>
-        </div>
-        <div class="progress-stat">
-          <div class="stat-value" id="percentage">0%</div>
-          <div class="stat-label">完成度</div>
-        </div>
-      </div>
+      <!-- 总体统计 -->
+      <div class="progress-overview" id="overviewStats"></div>
 
       <div class="progress-bar-large">
         <div class="fill" id="progressBarLarge"></div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-        <h3>已掌握的概念</h3>
-        <button class="btn btn-secondary" onclick="resetProgress()" style="font-size:0.875rem;padding:8px 16px;">重置进度</button>
+      <!-- 学习建议 -->
+      <div id="recommendationsSection" style="margin-bottom:48px;">
+        <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:16px;">学习建议</h3>
+        <div id="recommendations"></div>
       </div>
 
-      <div id="masteredList"></div>
-
-      <div class="empty-state" id="emptyState">
-        <h3>还没有掌握任何概念</h3>
-        <p>去学习页面开始吧！</p>
-        <a href="learn.html" class="btn btn-primary" style="margin-top:16px;">开始学习 →</a>
+      <!-- 分类掌握情况 -->
+      <div style="margin-bottom:48px;">
+        <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:16px;">分类掌握情况</h3>
+        <div class="progress-overview" id="categoryStats"></div>
       </div>
+
+      <!-- 已掌握列表 -->
+      <div style="margin-bottom:32px;">
+        <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:16px;">已掌握的概念 (<span id="masteredCount">0</span>)</h3>
+        <div class="mastered-list" id="masteredList"></div>
+      </div>
+
+      <!-- 建议复习 -->
+      <div style="margin-bottom:48px;">
+        <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:16px;">建议复习 (<span id="reviewCount">0</span>)</h3>
+        <div class="mastered-list" id="reviewList"></div>
+      </div>
+
+      <!-- 数据管理 -->
+      <div style="margin-bottom:48px;">
+        <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:16px;">数据管理</h3>
+        <div style="text-align:center;">
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
+            <button class="btn btn-secondary" onclick="exportProgress()">导出学习数据</button>
+            <button class="btn btn-secondary" onclick="importProgress()">导入学习数据</button>
+            <button class="btn btn-ghost" onclick="clearProgress()" style="color:#ef4444;">清除所有数据</button>
+          </div>
+          <p style="font-size:0.875rem;color:var(--color-text-secondary);">数据存储在本地浏览器中，建议定期备份</p>
+        </div>
+      </div>
+
+      <input type="file" id="importFile" accept=".json" style="display:none;" onchange="handleImport(event)">
     </div>
   </main>
+
+  <div class="toast" id="toast"></div>
 
   <script src="js/wordData.js"></script>
   <script src="js/storage.js"></script>
   <script>
     (function() {
-      function showFeedback(message, isSuccess) {
-        var toast = document.createElement('div');
-        toast.className = 'feedback-toast ' + (isSuccess ? 'success' : 'error');
+      function showToast(message) {
+        var toast = document.getElementById('toast');
+        if (!toast) return;
         toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(function() { toast.remove(); }, 3000);
+        toast.classList.add('show');
+        setTimeout(function() { toast.classList.remove('show'); }, 2000);
       }
 
-      function loadProgress() {
-        var progress = StorageManager.getProgress();
-        var masteredCount = progress.masteredRoots.length;
-        var totalCount = WordRoots.length;
-        var pct = Math.round((masteredCount / totalCount) * 100);
+      function renderOverviewStats() {
+        var stats = getOverallStats();
+        var quizStats = getQuizStats();
+        document.getElementById('overviewStats').innerHTML =
+          '<div class="progress-stat"><div class="stat-value">' + stats.mastered + '</div><div class="stat-label">已掌握概念</div></div>' +
+          '<div class="progress-stat"><div class="stat-value">' + Math.round(stats.masteredPercentage) + '%</div><div class="stat-label">掌握率</div></div>' +
+          '<div class="progress-stat"><div class="stat-value">' + stats.visited + '</div><div class="stat-label">已学习概念</div></div>' +
+          '<div class="progress-stat"><div class="stat-value">' + Math.round(quizStats.accuracy) + '%</div><div class="stat-label">测试正确率</div></div>';
+        var bar = document.getElementById('progressBarLarge');
+        if (bar) bar.style.width = Math.round(stats.masteredPercentage) + '%';
+      }
 
-        var masteredEl = document.getElementById('masteredCount');
-        var totalEl = document.getElementById('totalCount');
-        var pctEl = document.getElementById('percentage');
-        var barEl = document.getElementById('progressBarLarge');
-        var listEl = document.getElementById('masteredList');
-        var emptyEl = document.getElementById('emptyState');
-
-        if (masteredEl) masteredEl.textContent = masteredCount;
-        if (totalEl) totalEl.textContent = totalCount;
-        if (pctEl) pctEl.textContent = pct + '%';
-        if (barEl) barEl.style.width = pct + '%';
-
-        if (listEl) {
-          listEl.innerHTML = '';
-          if (masteredCount > 0) {
-            progress.masteredRoots.forEach(function(rootId) {
-              var root = WordRoots.find(function(r) { return r.id === rootId; });
-              if (!root) return;
-              var item = document.createElement('div');
-              item.className = 'mastered-item';
-              var info = document.createElement('div');
-              info.className = 'mastered-info';
-              var h4 = document.createElement('h4');
-              h4.textContent = root.root;
-              var p = document.createElement('p');
-              p.textContent = root.meaning;
-              info.appendChild(h4);
-              info.appendChild(p);
-              var link = document.createElement('a');
-              link.href = 'root-detail.html?id=' + root.id;
-              link.className = 'btn btn-secondary';
-              link.textContent = '查看';
-              link.style.fontSize = '0.875rem';
-              link.style.padding = '6px 12px';
-              item.appendChild(info);
-              item.appendChild(link);
-              listEl.appendChild(item);
-            });
-          }
+      function renderRecommendations() {
+        var recommendations = getStudyRecommendations();
+        var container = document.getElementById('recommendations');
+        if (recommendations.length === 0) {
+          container.innerHTML = '<div class="card"><p style="text-align:center;color:var(--color-text-secondary);">继续保持良好的学习状态！</p></div>';
+          return;
         }
-
-        if (emptyEl) emptyEl.style.display = masteredCount > 0 ? 'none' : 'block';
+        container.innerHTML = recommendations.map(function(rec) {
+          return '<div class="card" style="margin-bottom:12px;"><h4 style="margin-bottom:8px;color:var(--color-accent-dark);">' + rec.title + '</h4><p style="margin:0;color:var(--color-text-secondary);">' + rec.description + '</p></div>';
+        }).join('');
       }
 
-      window.resetProgress = function() {
-        if (confirm('确定要重置所有学习进度吗？此操作无法撤销。')) {
-          StorageManager.resetProgress();
-          showFeedback('✓ 进度已重置', true);
-          loadProgress();
+      function renderCategoryStats() {
+        var masteredItems = loadMasteredItems();
+        var categories = {};
+        WordRoots.forEach(function(item) {
+          if (!categories[item.origin]) categories[item.origin] = { total: 0, mastered: 0 };
+          categories[item.origin].total++;
+          if (masteredItems.indexOf(item.id) >= 0) categories[item.origin].mastered++;
+        });
+        var html = '';
+        Object.keys(categories).forEach(function(category) {
+          var stats = categories[category];
+          var pct = Math.round((stats.mastered / stats.total) * 100);
+          html += '<div class="progress-stat"><div class="stat-value">' + stats.mastered + '/' + stats.total + '</div><div class="stat-label">' + category + '</div><div style="margin-top:8px;font-size:0.875rem;color:var(--color-text-secondary);">' + pct + '% 掌握</div></div>';
+        });
+        document.getElementById('categoryStats').innerHTML = html;
+      }
+
+      function renderMasteredItems() {
+        var masteredItems = loadMasteredItems();
+        var masteredRoots = WordRoots.filter(function(item) { return masteredItems.indexOf(item.id) >= 0; });
+        document.getElementById('masteredCount').textContent = masteredRoots.length;
+
+        var container = document.getElementById('masteredList');
+        if (masteredRoots.length === 0) {
+          container.innerHTML = '<div style="text-align:center;color:var(--color-text-secondary);padding:32px 0;"><p>还没有掌握任何概念</p><a href="learn.html" class="btn btn-primary" style="margin-top:16px;">开始学习</a></div>';
+          return;
+        }
+        container.innerHTML = '';
+        masteredRoots.forEach(function(item) {
+          var div = document.createElement('div');
+          div.className = 'mastered-item';
+          div.style.cursor = 'pointer';
+          div.onclick = function() { window.location.href = 'root-detail.html?id=' + item.id; };
+          div.innerHTML = '<div class="mastered-info"><h4>' + item.root + '</h4><p>' + item.meaning + '</p></div><span class="btn btn-secondary" style="font-size:0.875rem;padding:6px 12px;">查看</span>';
+          container.appendChild(div);
+        });
+      }
+
+      function renderReviewItems() {
+        var masteredItems = loadMasteredItems();
+        var quizResults = {};
+        try { quizResults = JSON.parse(localStorage.getItem('harness_learn_quiz_results') || '{}'); } catch(e) {}
+        var reviewItems = WordRoots.filter(function(item) {
+          if (masteredItems.indexOf(item.id) < 0) return false;
+          var itemResults = quizResults[item.id] || [];
+          if (itemResults.length === 0) return false;
+          var correct = itemResults.filter(function(r) { return r.isCorrect; }).length;
+          return (correct / itemResults.length) * 100 < 70;
+        });
+        document.getElementById('reviewCount').textContent = reviewItems.length;
+        var container = document.getElementById('reviewList');
+        if (reviewItems.length === 0) {
+          container.innerHTML = '<div style="text-align:center;color:var(--color-text-secondary);padding:16px 0;">暂无需要复习的概念</div>';
+          return;
+        }
+        container.innerHTML = '';
+        reviewItems.forEach(function(item) {
+          var div = document.createElement('div');
+          div.className = 'mastered-item';
+          div.style.cursor = 'pointer';
+          div.onclick = function() { window.location.href = 'root-detail.html?id=' + item.id; };
+          div.innerHTML = '<div class="mastered-info"><h4>⚠ ' + item.root + '</h4><p>' + item.meaning + '</p></div><span class="btn btn-secondary" style="font-size:0.875rem;padding:6px 12px;">复习</span>';
+          container.appendChild(div);
+        });
+      }
+
+      window.exportProgress = function() {
+        try {
+          var data = exportData();
+          var blob = new Blob([data], { type: 'application/json' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'harness-learn-progress-' + new Date().toISOString().split('T')[0] + '.json';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('学习数据已导出！');
+        } catch (error) {
+          showToast('导出失败：' + error.message);
         }
       };
 
-      loadProgress();
+      window.importProgress = function() { document.getElementById('importFile').click(); };
+
+      window.handleImport = function(event) {
+        var file = event.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            var success = importData(e.target.result);
+            if (success) {
+              showToast('学习数据导入成功！页面将刷新。');
+              setTimeout(function() { window.location.reload(); }, 1500);
+            } else {
+              showToast('导入失败：数据格式不正确');
+            }
+          } catch (error) {
+            showToast('导入失败：' + error.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+
+      window.clearProgress = function() {
+        if (confirm('确定要清除所有学习数据吗？此操作无法撤销。')) {
+          clearAllData();
+        }
+      };
+
+      function initializePage() {
+        renderOverviewStats();
+        renderRecommendations();
+        renderCategoryStats();
+        renderMasteredItems();
+        renderReviewItems();
+      }
+
+      window.addEventListener('masteredChanged', function() { initializePage(); });
+      initializePage();
     })();
   </script>
 </body>

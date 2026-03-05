@@ -1,16 +1,16 @@
 const siteConfig = {
   topic: "OpenAI Harness Engineering",
-  siteName: "OpenAI Harness Engineering 工坊",
+  siteName: "Harness Engineering 工坊",
   itemName: "概念",
   itemCount: 25,
 
   hero: {
     title: [
       "25个核心概念",
-      "掌握AI评估工程",
-      "构建可靠的LLM系统"
+      "掌握Agent-First工程",
+      "人类掌舵 代理执行"
     ],
-    subtitle: "从 Evals 框架到安全测试，系统学习 OpenAI 评估工程的核心方法论与最佳实践",
+    subtitle: "基于 OpenAI 工程博客，系统学习在 Agent-First 世界中利用 Codex 构建软件的方法论与最佳实践",
     animation: {
       enabled: true,
       demoCount: 5
@@ -24,8 +24,8 @@ const siteConfig = {
   ],
 
   footer: {
-    tagline: "像工程师一样评估AI",
-    description: "基于 OpenAI 官方技术博客与开源实践，系统梳理 AI 评估工程的核心概念。从 Evals 框架到 Red Teaming，从 Prompt Regression 到安全基准，帮助你构建可靠、可测量、可迭代的 LLM 系统。"
+    tagline: "像架构师一样驾驭AI代理",
+    description: "基于 OpenAI 2026年2月技术博客《Harness Engineering》，系统梳理 Agent-First 软件开发的核心概念。从环境设计到代理自主性，从代码可读性到技术债务管理，帮助你掌握人类掌舵、代理执行的新工程范式。"
   },
 
   cta: {
