@@ -172,8 +172,7 @@
 
       function renderReviewItems() {
         var masteredItems = loadMasteredItems();
-        var quizResults = {};
-        try { quizResults = JSON.parse(localStorage.getItem('harness_learn_quiz_results') || '{}'); } catch(e) {}
+        var quizResults = loadQuizResults();
         var reviewItems = WordRoots.filter(function(item) {
           if (masteredItems.indexOf(item.id) < 0) return false;
           var itemResults = quizResults[item.id] || [];

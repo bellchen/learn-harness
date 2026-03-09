@@ -164,7 +164,10 @@
         });
       }
 
+      var quizAnswered = false;
+
       function renderQuiz(quiz, root) {
+        quizAnswered = false;
         var questionEl = document.getElementById('quizQuestion');
         var optionsEl = document.getElementById('quizOptions');
         var resultEl = document.getElementById('quizResult');
@@ -182,8 +185,10 @@
       }
 
       function checkAnswer(selectedIndex, quiz, root) {
+        if (quizAnswered) return;
+        quizAnswered = true;
         var isCorrect = selectedIndex === quiz.correctAnswer;
-        var options = document.querySelectorAll('.quiz-option');
+        var options = document.querySelectorAll('#quizOptions .quiz-option');
         var resultEl = document.getElementById('quizResult');
         options.forEach(function(btn, index) {
           btn.disabled = true;
@@ -195,6 +200,13 @@
           if (resultEl) {
             resultEl.className = 'quiz-result ' + (isCorrect ? 'correct' : 'incorrect');
             resultEl.textContent = isCorrect ? '✓ 回答正确！' : '✗ 回答错误。正确答案是 ' + String.fromCharCode(65 + quiz.correctAnswer);
+          }
+          // 回答正确自动标记为已掌握
+          if (isCorrect && !isMastered(root.id)) {
+            saveMastered(root.id, true);
+            document.getElementById('masteredCheckbox').checked = true;
+            document.getElementById('masteredBadge').style.display = 'inline-block';
+            showToast('已自动标记为已掌握 ✓');
           }
         }, 300);
       }

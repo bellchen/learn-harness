@@ -178,6 +178,14 @@
           }
           saveQuizResult(currentRoot.id, isCorrect, selectedIndex, correctIndex);
           quizAnswered = true;
+          // 回答正确自动标记为已掌握
+          if (isCorrect && !isMastered(currentRoot.id)) {
+            saveMastered(currentRoot.id, true);
+            showToast('已自动标记为已掌握 ✓');
+            // 刷新页面UI显示已掌握状态
+            var badge = document.getElementById('masteredBadge');
+            if (badge) badge.style.display = 'inline-block';
+          }
         }, 300);
       };
 

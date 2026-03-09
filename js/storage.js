@@ -149,7 +149,7 @@ function getOverallStats() {
   var visitedCount = getVisitedCount();
   var quizStats = getQuizStats();
   var progress = loadProgress();
-  var totalItems = 25;
+  var totalItems = (typeof WordRoots !== 'undefined') ? WordRoots.length : 25;
   return {
     mastered: masteredCount, visited: visitedCount, totalItems: totalItems,
     masteredPercentage: (masteredCount / totalItems) * 100,
