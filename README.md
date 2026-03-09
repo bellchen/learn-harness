@@ -1,8 +1,8 @@
 # 🔬 Harness Engineering 工坊
 
-> 系统学习 Agent-First 世界中的 Harness Engineering 方法论，25 个核心概念掌握「人类掌舵，代理执行」的新工程范式。
+> 系统学习 Agent-First 世界中的 Harness Engineering 方法论，25 个核心概念掌握「人类掌舵，智能体执行」（Humans steer. Agents execute.）的新工程范式。
 
-基于 OpenAI 2026年2月技术博客《Harness Engineering》，系统梳理 Agent-First 软件开发的核心概念——从环境设计到代理自主性，从代码可读性到技术债务管理。
+基于 OpenAI 技术人员 Ryan Lopopolo 于 2026 年 2 月 11 日发表的实践报告 [*Harness Engineering*](https://openai.com/index/harness-engineering/)，系统梳理 Agent-First 软件开发的核心概念——从环境设计到智能体自主性，从代码可读性到技术债务管理。
 
 🌐 **在线体验**: [https://learn-harness.vercel.app](https://learn-harness.vercel.app)
 
@@ -18,21 +18,21 @@
 
 ## 概念覆盖
 
-涵盖 5 大主题 25 个核心概念：
+涵盖 11 大主题 25 个核心概念：
 
 | 主题 | 概念 |
 |------|------|
-| 核心理念 | Harness Engineering, Agent-First Development, Role Transformation |
-| 工程方法 | Deep-First Decomposition |
-| 反馈循环 | Ralph Wiggum Loop, Agent Review Pipeline |
-| 知识管理 | Repository Knowledge, Context as Existence, Docs Structure |
-| 架构强制 | Layered Architecture, Taste Invariants, Mechanical Enforcement |
-| 可读性工程 | Application Legibility, Agent Readability, Observability Stack, CDP Integration |
-| 自主性提升 | End-to-End Autonomy |
-| 合并哲学 | Throughput Philosophy |
-| 代码维护 | Entropy & Garbage Collection, Golden Rules, Quality Grading, Incremental Debt Repayment |
-| 执行模式 | Long-Running Tasks, Git Worktree |
-| 未来探索 | Open Frontiers |
+| 核心理念 | Harness Engineering、智能体优先开发（Agent-First Development）、角色转变（Redefining the role of the engineer） |
+| 工程方法 | 深度优先的工作方式（Work depth-first） |
+| 反馈循环 | Ralph Wiggum 循环（Ralph Wiggum Loop）、智能体审核流水线（Agent Review Pipeline） |
+| 知识管理 | 我们将代码仓库设为记录系统（We made repository knowledge the system of record）、目标是智能体的可读性（Agent legibility is the goal）、Docs 目录结构 |
+| 架构强制 | 规范架构与品味（Enforcing architecture and taste）、品味不变式（Taste Invariants）、机械强制执行（Mechanical Enforcement） |
+| 可读性工程 | 提高应用程序的可读性（Increasing application legibility）、情境即存在（Context as Existence）、可观测性堆栈（Observability Stack）、CDP 集成 |
+| 自主性提升 | 不断提高的自主水平（Increasing levels of autonomy） |
+| 合并哲学 | 吞吐量改变了合并的理念（Throughput changes the merge philosophy） |
+| 代码维护 | 熵与垃圾收集（Entropy and garbage collection）、黄金原则（Golden Principles）、质量等级（Quality Grading）、增量偿还技术债务 |
+| 执行模式 | 长时间运行的任务（Long-Running Tasks）、Git Worktree |
+| 未来探索 | 我们仍在学习的内容（What we're still learning） |
 
 ## 技术栈
 
