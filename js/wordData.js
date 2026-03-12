@@ -164,7 +164,7 @@ const WordRoots = [
     root: "我们将代码仓库设为记录系统",
     origin: "知识管理",
     meaning: "将代码仓库的知识库作为记录系统，让智能体高效获取上下文",
-    description: "「我们将代码仓库设为记录系统」（We made repository knowledge the system of record）是原文的一个完整章节标题。原文的核心教训是：「要给 Codex 的是一张地图，而不是一本 1,000 页的说明书」（give Codex a map, not a 1,000-page instruction manual）。团队尝试了「一个大型 AGENTS.md」方法但失败了，因为：情境是稀缺资源（Context is a scarce resource），巨大的指令文件会挤掉任务和代码；过多指导反而变成了无效指导（Too much guidance becomes non-guidance）；它会立即腐烂（It rots instantly）且难以验证（It's hard to verify）。取而代之的是将 AGENTS.md（约 100 行）视为「内容目录」（the table of contents），指向 docs/ 目录中更深层次的真实信息来源。智能体从一个小而稳定的切入点开始，被指导下一步该去哪里查看，而不是一开始就被淹没。",
+    description: "「我们将代码仓库设为记录系统」（We made repository knowledge the system of record）是原文的一个完整章节标题。原文的核心教训是：「要给 Codex 的是一张地图，而不是一本 1,000 页的说明书」（give Codex a map, not a 1,000-page instruction manual）。团队尝试了「一个大型 AGENTS.md」方法但失败了，因为：上下文是稀缺资源（Context is a scarce resource），巨大的指令文件会挤掉任务和代码；过多指导反而变成了无效指导（Too much guidance becomes non-guidance）；它会立即腐烂（It rots instantly）且难以验证（It's hard to verify）。取而代之的是将 AGENTS.md（约 100 行）视为「内容目录」（the table of contents），指向 docs/ 目录中更深层次的真实信息来源。智能体从一个小而稳定的切入点开始，被指导下一步该去哪里查看，而不是一开始就被淹没。",
     examples: [
       {
         word: "地图策略",
@@ -187,7 +187,7 @@ const WordRoots = [
     ],
     quiz: {
       question: "OpenAI 团队为什么放弃了「一个大型 AGENTS.md」方法？",
-      options: ["技术限制", "情境是稀缺资源，过多指导反而无效且容易腐烂", "团队规模太小", "Codex 不支持 Markdown"],
+      options: ["技术限制", "上下文是稀缺资源，过多指导反而无效且容易腐烂", "团队规模太小", "Codex 不支持 Markdown"],
       correctAnswer: 1
     }
   },
@@ -195,8 +195,8 @@ const WordRoots = [
     id: 7,
     root: "目标是智能体的可读性",
     origin: "知识管理",
-    meaning: "智能体在运行时无法在情境中访问的内容，对它来说不存在",
-    description: "「目标是智能体的可读性」（Agent legibility is the goal）是原文的一个完整章节标题。原文明确指出：「从智能体的角度来看，它在运行时无法在情境中访问的任何内容都是不存在的。」因此，知识必须存在于代码仓库本地的、已版本化的工件中——代码、Markdown、模式（schemas）、可执行计划（executable plans）——而不是 Google Docs、聊天记录或人们头脑中（Knowledge that lives in Google Docs, chat threads, or people's heads are not accessible to the system）。团队随着时间推移，将越来越多的情境推送到仓库中，就像为新入职的团队成员提供引导一样。技术选择上，倾向于可以在仓库内部完全内化和推理的依赖项，偏好「枯燥」的技术——可组合、API 稳定、训练集中有代表。",
+    meaning: "智能体在运行时无法在上下文中访问的内容，对它来说不存在",
+    description: "「目标是智能体的可读性」（Agent legibility is the goal）是原文的一个完整章节标题。原文明确指出：「从智能体的角度来看，它在运行时无法在上下文中访问的任何内容都是不存在的。」因此，知识必须存在于代码仓库本地的、已版本化的工件中——代码、Markdown、模式（schemas）、可执行计划（executable plans）——而不是 Google Docs、聊天记录或人们头脑中（Knowledge that lives in Google Docs, chat threads, or people's heads are not accessible to the system）。团队随着时间推移，将越来越多的上下文推送到仓库中，就像为新入职的团队成员提供引导一样。技术选择上，倾向于可以在仓库内部完全内化和推理的依赖项，偏好「成熟稳定」的技术——可组合、API 稳定、训练集中有代表。",
     examples: [
       {
         word: "版本化工件",
@@ -205,10 +205,10 @@ const WordRoots = [
         explanation: "架构决策、设计讨论、产品规格等都不能只存在于聊天记录或外部文档中，必须版本化存储在代码仓库里。"
       },
       {
-        word: "枯燥技术偏好",
+        word: "成熟稳定技术偏好",
         meaning: "选择可组合、API 稳定、训练集中有代表的技术",
         breakdown: { root: "目标是智能体的可读性" },
-        explanation: "原文用「boring」（枯燥）描述，智能体对训练数据中常见的技术表现更好，稳定的技术比新潮但冷门的技术更适合。"
+        explanation: "原文用「boring」描述，在技术社区中这是个褒义术语，指成熟稳定、经过验证的技术。智能体对训练数据中常见的技术表现更好，稳定的技术比新潮但冷门的技术更适合。"
       },
       {
         word: "内部重新实现",
@@ -260,7 +260,7 @@ const WordRoots = [
     root: "品味不变式",
     origin: "架构强制",
     meaning: "将代码品味和风格规范编码为可自动验证的不变式",
-    description: "品味不变式（taste invariants）是「规范架构与品味」（Enforcing architecture and taste）章节中保持代码库一致性的方法。原文说的是「通过自定义的代码检查器和结构测试来强制执行这些规则，并辅以一小组品味不变式」。核心思想是：「通过强制执行不变量，而非对实施过程进行微观管理，我们让智能体快速交付的同时不损害基础。」（By enforcing invariants, not micromanaging implementations, we let agents ship fast without undermining the foundation.）静态强制执行的内容包括：结构化日志记录、模式和类型的命名约定、文件大小限制，以及特定平台的可靠性要求。关键创新在于：由于 lint 是自定义的，错误信息被编写为在智能体情境中注入修复指令——这意味着当智能体违反规则时，它会自动获得如何修复的指导。权衡策略是「在中央层面强制执行边界，在本地层面允许自主权」。",
+    description: "品味不变式（taste invariants）是「规范架构与品味」（Enforcing architecture and taste）章节中保持代码库一致性的方法。原文说的是「通过自定义的代码检查器和结构测试来强制执行这些规则，并辅以一小组品味不变式」。核心思想是：「通过强制执行不变量，而非对实施过程进行微观管理，我们让智能体快速交付的同时不损害基础。」（By enforcing invariants, not micromanaging implementations, we let agents ship fast without undermining the foundation.）静态强制执行的内容包括：结构化日志记录、模式和类型的命名约定、文件大小限制，以及特定平台的可靠性要求。关键创新在于：由于 lint 是自定义的，错误信息被编写为在智能体上下文中注入修复指令——这意味着当智能体违反规则时，它会自动获得如何修复的指导。权衡策略是「在中央层面强制执行边界，在本地层面允许自主权」。",
     examples: [
       {
         word: "lint 修复指令",
@@ -275,15 +275,15 @@ const WordRoots = [
         explanation: "原文类比为「领导一个大型工程平台组织：在中央层面强制执行边界，在本地层面允许自主权」。"
       },
       {
-        word: "倍增器效应",
+        word: "效能放大效应",
         meaning: "规则一旦编码，立即应用于所有地方",
         breakdown: { root: "品味不变式" },
-        explanation: "原文指出：「在以人为本的工作流程中，这些规则可能让人感到迂腐。有了智能体，它们就成了倍增器：一旦编码，就能立即应用于所有地方。」"
+        explanation: "原文指出：「在以人为本的工作流程中，这些规则可能让人感到迂腐。有了智能体，它们就成了效能放大器（multiplier）：一旦编码，就能立即应用于所有地方。」"
       }
     ],
     quiz: {
       question: "品味不变式中 lint 错误消息的独特设计是什么？",
-      options: ["只显示错误行号", "在智能体情境中注入修复指令", "自动删除违规代码", "发送邮件通知人类"],
+      options: ["只显示错误行号", "在智能体上下文中注入修复指令", "自动删除违规代码", "发送邮件通知人类"],
       correctAnswer: 1
     }
   },
@@ -321,33 +321,33 @@ const WordRoots = [
   },
   {
     id: 11,
-    root: "情境即存在",
-    origin: "可读性工程",
-    meaning: "优先为智能体优化代码的可读性，使其可以直接从代码仓库推理业务领域",
-    description: "情境即存在是从「目标是智能体的可读性」（Agent legibility is the goal）章节提炼的核心认知。原文强调：「由于该代码仓库完全由智能体生成，因此我们首先针对 Codex 的可读性进行了优化。」目标是让智能体能够直接从代码仓库推理出完整的业务领域。这一框架明确了许多取舍：倾向于选择可以完全内化在仓库中进行推理的依赖项和抽象。在某些情况下，让智能体重新实现部分功能子集比绕过公共库中不透明的上游行为更便宜——例如团队没有引入通用的 p-limit 风格包，而是投入使用了自己的带并发的 map 辅助函数。",
+    root: "上下文即存在",
+   origin: "可读性工程",
+   meaning: "优先为智能体优化代码的可读性，使其可以直接从代码仓库推理业务领域",
+   description: "上下文即存在是从「目标是智能体的可读性」（Agent legibility is the goal）章节提炼的核心认知。原文强调：「由于该代码仓库完全由智能体生成，因此我们首先针对 Codex 的可读性进行了优化。」目标是让智能体能够直接从代码仓库推理出完整的业务领域。这一框架明确了许多取舍：倾向于选择可以完全内化在仓库中进行推理的依赖项和抽象。在某些情况下，让智能体重新实现部分功能子集比绕过公共库中不透明的上游行为更便宜——例如团队没有引入通用的 p-limit 风格包，而是投入使用了自己的带并发的 map 辅助函数。",
     examples: [
       {
         word: "仓库内化推理",
         meaning: "选择智能体可以在仓库内部完全理解的技术",
-        breakdown: { root: "情境即存在" },
-        explanation: "偏好「枯燥」技术（API 稳定、训练集中有代表），避免需要大量外部知识才能理解的新潮框架。"
-      },
-      {
-        word: "情境入职",
-        meaning: "像入职新员工一样持续向仓库注入情境",
-        breakdown: { root: "情境即存在" },
+        breakdown: { root: "上下文即存在" },
+       explanation: "偏好「成熟稳定」技术（API 稳定、训练集中有代表），避免需要大量外部知识才能理解的新潮框架。"
+     },
+     {
+       word: "上下文入职",
+       meaning: "像入职新员工一样持续向仓库注入上下文",
+       breakdown: { root: "上下文即存在" },
         explanation: "原文举例：「那次让团队在架构模式上达成一致的 Slack 讨论？如果智能体无法发现它，那么它就会像迟了三个月入职的新员工一样，对其一无所知。」"
       },
       {
         word: "品味同步",
         meaning: "将产品原则、工程规范和团队文化同步给智能体",
-        breakdown: { root: "情境即存在" },
-        explanation: "原文指出：「就像你会在产品原则、工程规范和团队文化（包括表情符号偏好）方面为新队友提供引导一样，将这些信息提供给智能体会带来更一致的输出。」"
-      }
-    ],
-    quiz: {
-      question: "「情境即存在」原则的核心含义是什么？",
-      options: ["智能体可以访问所有信息", "智能体无法访问的内容对它不存在", "只需写好代码即可", "外部文档更重要"],
+        breakdown: { root: "上下文即存在" },
+       explanation: "原文指出：「就像你会在产品原则、工程规范和团队文化（包括表情符号偏好）方面为新队友提供引导一样，将这些信息提供给智能体会带来更一致的输出。」"
+     }
+   ],
+   quiz: {
+     question: "「上下文即存在」原则的核心含义是什么？",
+     options: ["智能体可以访问所有信息", "智能体无法访问的内容对它不存在", "只需写好代码即可", "外部文档更重要"],
       correctAnswer: 1
     }
   },
@@ -548,7 +548,7 @@ const WordRoots = [
     root: "智能体审核流水线",
     origin: "反馈循环",
     meaning: "智能体审核智能体代码的自动化审核流水线",
-    description: "智能体审核流水线是 Ralph Wiggum 循环的工程化实现，将代码审核从人类驱动转变为智能体驱动。原文描述了完整流程：工程师描述任务并运行智能体，智能体打开 PR；指示 Codex 在本地审核自身更改（本地智能体审核）；在本地和云端请求额外的特定智能体审查（云端深度审核）；对任何人工或智能体给出的反馈做出响应并迭代修复。Codex 直接使用标准开发工具（gh、本地脚本和嵌入代码仓库的技能）来收集情境。",
+    description: "智能体审核流水线是 Ralph Wiggum 循环的工程化实现，将代码审核从人类驱动转变为智能体驱动。原文描述了完整流程：工程师描述任务并运行智能体，智能体打开 PR；指示 Codex 在本地审核自身更改（本地智能体审核）；在本地和云端请求额外的特定智能体审查（云端深度审核）；对任何人工或智能体给出的反馈做出响应并迭代修复。Codex 直接使用标准开发工具（gh、本地脚本和嵌入代码仓库的技能）来收集上下文。",
     examples: [
       {
         word: "本地智能体审核",
@@ -740,7 +740,7 @@ const WordRoots = [
     root: "重新定义工程师的角色",
     origin: "核心理念",
     meaning: "工程师角色从编写代码转变为设计环境和搭建支撑结构",
-    description: "「重新定义工程师的角色」（Redefining the role of the engineer）是原文的一个完整章节标题。原文描述：「缺乏人类亲手编码，引入了一种不同类型的工程工作，聚焦于系统、支撑结构和杠杆作用。」（introduced a different kind of engineering work, focused on systems, scaffolding, and leverage）核心工作包括：协助智能体完成有用的工作（enabling the agents to do useful work）、设计环境和反馈回路、将用户反馈转化为验收标准并验证结果。原文还提到一个重要洞察：「当智能体遇到困难时，我们将其视为一个信号：识别缺失的内容——工具、护栏、文档——并将其反馈到代码仓库中，始终由 Codex 自己编写修复。」（identify what is missing—tools, guardrails, documentation—and feed it back into the repository, always by having Codex itself write the fix）人类始终参与其中，但工作的抽象层次与过去不同。",
+    description: "「重新定义工程师的角色」（Redefining the role of the engineer）是原文的一个完整章节标题。原文描述：「缺乏人类亲手编码，引入了一种不同类型的工程工作，聚焦于系统、支撑结构和效能放大。」（introduced a different kind of engineering work, focused on systems, scaffolding, and leverage）核心工作包括：协助智能体完成有用的工作（enabling the agents to do useful work）、设计环境和反馈回路、将用户反馈转化为验收标准并验证结果。原文还提到一个重要洞察：「当智能体遇到困难时，我们将其视为一个信号：识别缺失的内容——工具、护栏、文档——并将其反馈到代码仓库中，始终由 Codex 自己编写修复。」（identify what is missing—tools, guardrails, documentation—and feed it back into the repository, always by having Codex itself write the fix）人类始终参与其中，但工作的抽象层次与过去不同。",
     examples: [
       {
         word: "环境设计师",
@@ -772,7 +772,7 @@ const WordRoots = [
     root: "我们仍在学习的内容",
     origin: "未来探索",
     meaning: "Harness Engineering 中尚待解决的开放性问题",
-    description: "「我们仍在学习的内容」（What we're still learning）是原文最后一个章节。原文提出三大核心挑战：(1) 架构连贯性——「我们尚不清楚的是，在一个完全由智能体生成的系统中，架构连贯性会如何随着年份的推移而演变」（how architectural coherence evolves over years）；(2) 人类判断力的杠杆——「我们仍在学习人类的判断力在哪些方面能发挥最大作用，以及如何对这种判断力进行编码，使其产生复利效应」（how to encode that judgment so it compounds）；(3) 模型演进——「我们也不知道，随着时间的推移，模型的功能不断增强，这一系统将如何演变。」原文最后总结：「构建软件仍然需要纪律，但纪律更多地体现在支撑结构上，而不是代码上。」（the discipline shows up more in the scaffolding rather than the code）",
+    description: "「我们仍在学习的内容」（What we're still learning）是原文最后一个章节。原文提出三大核心挑战：(1) 架构连贯性——「我们尚不清楚的是，在一个完全由智能体生成的系统中，架构连贯性会如何随着年份的推移而演变」（how architectural coherence evolves over years）；(2) 人类判断力的效能放大——「我们仍在学习人类的判断力在哪些方面能发挥最大作用，以及如何对这种判断力进行编码，使其产生复利效应」（how to encode that judgment so it compounds）；(3) 模型演进——「我们也不知道，随着时间的推移，模型的功能不断增强，这一系统将如何演变。」原文最后总结：「构建软件仍然需要纪律，但纪律更多地体现在支撑结构上，而不是代码上。」（the discipline shows up more in the scaffolding rather than the code）",
     examples: [
       {
         word: "长期架构连贯性",
@@ -781,7 +781,7 @@ const WordRoots = [
         explanation: "目前的实验只有五个月，尚不清楚完全由智能体生成的代码库在更长时间跨度中是否能保持架构连贯性。"
       },
       {
-        word: "人类判断力杠杆",
+        word: "人类判断力的效能放大",
         meaning: "如何将人类判断力编码为可发挥更大作用的系统",
         breakdown: { root: "我们仍在学习的内容" },
         explanation: "人类在哪些决策点上的介入价值最大？如何对这种判断力进行编码使其发挥复利效应？"
@@ -795,7 +795,7 @@ const WordRoots = [
     ],
     quiz: {
       question: "以下哪项不是原文提到的仍在学习的内容？",
-      options: ["长期架构连贯性", "人类判断力的杠杆", "模型能力演进", "智能体替代人类工程师"],
+      options: ["长期架构连贯性", "人类判断力的效能放大", "模型能力演进", "智能体替代人类工程师"],
       correctAnswer: 3
     }
   }
